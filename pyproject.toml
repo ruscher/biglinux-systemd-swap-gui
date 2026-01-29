@@ -1,0 +1,73 @@
+[build-system]
+requires = ["uv_build"]
+build-backend = "uv_build"
+
+[project]
+name = "biglinux-swap"
+version = "1.0.0"
+description = "BigLinux Swap Manager - GTK4/Adwaita GUI for systemd-swap configuration"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+    {name = "BigLinux Team", email = "dev@biglinux.com.br"}
+]
+maintainers = [
+    {name = "BigLinux Team", email = "dev@biglinux.com.br"}
+]
+keywords = [
+    "swap",
+    "zram",
+    "zswap",
+    "memory",
+    "systemd",
+    "gtk4",
+    "libadwaita",
+    "biglinux",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: GTK",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Desktop Environment :: Gnome",
+]
+
+# Runtime dependencies - PyGObject is typically system-installed
+dependencies = ["PyGObject"]
+
+[project.gui-scripts]
+biglinux-swap = "biglinux_swap:main"
+
+[project.urls]
+Homepage = "https://github.com/biglinux/biglinux-systemd-swap-gui"
+Issues = "https://github.com/biglinux/biglinux-systemd-swap-gui/issues"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["biglinux_swap"]
+
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E, W), isort (I)
+select = ["E", "F", "W", "I"]
+
+# E402: Module level import not at top of file
+# E501: Line too long
+# I001: [*] Import block is un-sorted or un-formatted
+# W291 Trailing whitespace
+# W293: Blank line contains whitespace
+ignore = ["E402", "E501", "I001", "W291", "W293"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -1,0 +1,55 @@
+# Maintainer: BigLinux Team <biglinux.com.br>
+
+pkgname=biglinux-systemd-swap-gui
+pkgdesc="GUI for managing systemd-swap configuration on BigLinux"
+
+depends=(
+	'biglinux-systemd-swap'
+	'gtk4'
+	'libadwaita'
+	'polkit'
+	'python'
+	'python-gobject'
+)
+makedepends=(
+	'python-build'
+	'python-installer'
+	'python-uv-build'
+	'python-wheel'
+)
+
+pkgver=$(date +%y.%m.%d)
+pkgrel=$(date +%H%M)
+
+arch=('any')
+license=('GPL-3.0-or-later')
+url="https://github.com/biglinux/${pkgname}"
+source=("git+${url}.git")
+md5sums=('SKIP')
+
+build() {
+	cd "${srcdir}/${pkgname}"
+	python -m build --wheel --no-isolation --skip-dependency-check
+}
+
+package() {
+	cd "${srcdir}/${pkgname}"
+
+	python -m installer --destdir="$pkgdir" dist/*.whl
+
+	# Install share files (desktop, icons, polkit)
+	cp -a usr/share "${pkgdir}/usr/share"
+
+	# Install executable wrapper
+	install -Dm755 usr/bin/biglinux-swap "${pkgdir}/usr/bin/biglinux-swap"
+
+	# Install license file if present
+	if [ -f "LICENSE" ]; then
+		install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	fi
+
+	# Install documentation if present
+	if [ -f "README.md" ]; then
+		install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+	fi
+}
