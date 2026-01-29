@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-systemd-swap-gui package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-systemd-swap-gui\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 196
+msgid ""
+"Let the system choose the best settings based on your hardware. Zswap is used when disk space is at "
+"least 5x your RAM size. Otherwise, Zram is used to save disk space."
+msgstr ""
+"Låt systemet välja de bästa inställningarna baserat på din hårdvara. Zswap används när diskutrymme "
+"är minst 5 gånger storleken på ditt RAM-minne. Annars används Zram för att spara diskutrymme."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
+msgid ""
+"Zswap offers better performance but uses more disk space. Best for SSD with plenty of free space "
+"(5x RAM or more). Data is compressed in RAM before writing to disk files."
+msgstr ""
+"Zswap erbjuder bättre prestanda men använder mer diskutrymme. Bäst för SSD med gott om ledigt "
+"utrymme (5x RAM eller mer). Data komprimeras i RAM innan den skrivs till diskfiler."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 206
+msgid ""
+"Zram uses less disk space than Zswap by compressing data in RAM. Best for HDD or systems with "
+"limited disk space. Swap files on disk serve as backup when RAM is full."
+msgstr ""
+"Zram använder mindre diskutrymme än Zswap genom att komprimera data i RAM. Bäst för HDD eller "
+"system med begränsat diskutrymme. Swap-filer på disk fungerar som backup när RAM är fullt."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 211
+msgid ""
+"Uses only compressed RAM, no disk files are created. Best for systems with very limited disk space. "
+"All swap is handled entirely in memory."
+msgstr ""
+"Använder endast komprimerat RAM, inga diskfiler skapas. Bäst för system med mycket begränsat "
+"diskutrymme. Allt byte hanteras helt i minnet."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 216
+msgid ""
+"Completely disable swap management. The systemd-swap service will be stopped. Not recommended "
+"unless you manage swap manually."
+msgstr ""
+"Avaktivera helt bytehantering. Tjänsten systemd-swap kommer att stoppas. Inte rekommenderat om du "
+"inte hanterar byte manuellt."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 222
+msgid "Compresses inactive memory before writing to disk. Reduces disk wear and improves performance."
+msgstr ""
+"Komprimerar inaktivt minne innan det skrivs till disk. Minskar slitage på disken och förbättrar "
+"prestanda."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 226
+msgid ""
+"LZ4: Faster compression, uses more disk space.\n"
+"ZSTD: Better compression, uses less disk space."
+msgstr ""
+"LZ4: Snabbare komprimering, använder mer diskutrymme.  \n"
+"ZSTD: Bättre komprimering, använder mindre diskutrymme."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 230
+msgid "How much RAM to use for compressed cache. Higher values = less disk writes but less free RAM."
+msgstr ""
+"Hur mycket RAM ska användas för komprimerad cache. Högre värden = färre diskskrivningar men mindre "
+"ledigt RAM."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 234
+msgid ""
+"Automatically releases compressed memory when system needs more RAM. Helps prevent out-of-memory "
+"situations."
+msgstr ""
+"Frigör automatiskt komprimerat minne när systemet behöver mer RAM. Hjälper till att förhindra "
+"situationer med otillräckligt minne."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 238
+msgid ""
+"Only compress pages that achieve this compression ratio or better. Higher values = only "
+"well-compressing data is cached."
+msgstr ""
+"Komprimera endast sidor som uppnår denna komprimeringskvot eller bättre. Högre värden = endast "
+"välkomprimerad data cachas."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 243
+msgid "Creates a compressed virtual disk in RAM. Stores more data without using physical disk."
+msgstr "Skapar en komprimerad virtuell disk i RAM. Lagrar mer data utan att använda fysisk disk."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
+msgid "Size of compressed RAM disk. Higher values allow storing more compressed data."
+msgstr "Storlek på komprimerad RAM-disk. Högre värden möjliggör lagring av mer komprimerad data."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 250
+msgid ""
+"LZ4: Fast but less compression.\n"
+"ZSTD: Slower but better compression."
+msgstr ""
+"LZ4: Snabb men mindre kompression.  \n"
+"ZSTD: Långsammare men bättre kompression."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 253
+msgid "Maximum actual RAM that zram can use. Prevents zram from consuming too much memory."
+msgstr "Maximalt faktiskt RAM som zram kan använda. Förhindrar att zram konsumerar för mycket minne."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 257
+msgid ""
+"Sets the priority for using zram vs other swap. Higher priority = zram is used first before disk "
+"swap."
+msgstr ""
+"Ställer in prioriteten för att använda zram jämfört med annan swap. Högre prioritet = zram används "
+"först innan disk-swap."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 261
+msgid "Allows zram to write incompressible data to disk. Saves RAM for data that compresses well."
+msgstr "Möjliggör zram att skriva inkomprimerbar data till disk. Sparar RAM för data som komprimeras bra."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 266
+msgid "Creates swap files on disk when RAM is full. Files grow and shrink automatically as needed."
+msgstr ""
+"Skapar växlingsfiler på disken när RAM-minnet är fullt. Filer växer och krymper automatiskt efter "
+"behov."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 270
+msgid "Initial size when creating new swap files. Smaller = less disk space, Larger = fewer files."
+msgstr "Initial storlek vid skapande av nya swap-filer. Mindre = mindre diskutrymme, Större = färre filer."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 274
+msgid "Maximum size each swap file can grow to. Limits how much disk space a single file can use."
+msgstr ""
+"Maximalt storlek som varje växlingsfil kan växa till. Begränsar hur mycket diskutrymme en enskild "
+"fil kan använda."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 278
+msgid "Maximum number of swap files to create. More files = more available swap space."
+msgstr "Maximalt antal byteswap-filer att skapa. Fler filer = mer tillgängligt byteswap-minne."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 282
+msgid ""
+"How quickly swap files grow when more space is needed. Higher values = faster growth but more disk "
+"usage."
+msgstr ""
+"Hur snabbt växer växlingsfiler när mer utrymme behövs. Högre värden = snabbare tillväxt men mer "
+"diskanvändning."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
+msgid "Folder where swap files are stored. Choose a location on your fastest disk for best performance."
+msgstr "Mapp där växlingsfiler lagras. Välj en plats på din snabbaste disk för bästa prestanda."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
+msgid "Protects active programs from being swapped out. Prevents system freezes when memory is low."
+msgstr "Skyddar aktiva program från att bytas ut. Förhindrar systemfrysningar när minnet är lågt."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
+msgid ""
+"How long to keep memory before allowing swap. Lower values = more aggressive swap, Higher = more "
+"protection."
+msgstr ""
+"Hur länge ska minnet behållas innan byte tillåts. Lägre värden = mer aggressiv byte, högre = mer "
+"skydd."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 300
+msgid "Shows if the swap management service is running. Green = active and working, Red = stopped or error."
+msgstr "Visar om tjänsten för bytehantering körs. Grön = aktiv och fungerar, Röd = stoppad eller fel."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 304
+msgid "Shows the current swap mode being used. This reflects the active configuration."
+msgstr "Visar det aktuella bytesläget som används. Detta återspeglar den aktiva konfigurationen."

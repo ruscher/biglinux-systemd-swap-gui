@@ -1,0 +1,193 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-systemd-swap-gui package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-systemd-swap-gui\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 196
+msgid ""
+"Let the system choose the best settings based on your hardware. Zswap is used when disk space is at "
+"least 5x your RAM size. Otherwise, Zram is used to save disk space."
+msgstr ""
+"Lăsați sistemul să aleagă cele mai bune setări în funcție de hardware-ul dumneavoastră. Zswap este "
+"utilizat atunci când spațiul pe disc este de cel puțin 5 ori mai mare decât dimensiunea RAM-ului. "
+"În caz contrar, Zram este utilizat pentru a economisi spațiu pe disc."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
+msgid ""
+"Zswap offers better performance but uses more disk space. Best for SSD with plenty of free space "
+"(5x RAM or more). Data is compressed in RAM before writing to disk files."
+msgstr ""
+"Zswap oferă performanțe mai bune, dar folosește mai mult spațiu pe disc. Cel mai bine pentru SSD cu "
+"mult spațiu liber (5x RAM sau mai mult). Datele sunt comprimate în RAM înainte de a fi scrise în "
+"fișierele de disc."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 206
+msgid ""
+"Zram uses less disk space than Zswap by compressing data in RAM. Best for HDD or systems with "
+"limited disk space. Swap files on disk serve as backup when RAM is full."
+msgstr ""
+"Zram folosește mai puțin spațiu pe disc decât Zswap prin comprimarea datelor în RAM. Cel mai bine "
+"pentru HDD sau sisteme cu spațiu limitat pe disc. Fișierele de swap de pe disc servesc ca backup "
+"atunci când RAM-ul este plin."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 211
+msgid ""
+"Uses only compressed RAM, no disk files are created. Best for systems with very limited disk space. "
+"All swap is handled entirely in memory."
+msgstr ""
+"Utilizează doar RAM comprimat, nu sunt create fișiere pe disc. Cel mai bine pentru sistemele cu "
+"spațiu pe disc foarte limitat. Toată swap-ul este gestionat complet în memorie."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 216
+msgid ""
+"Completely disable swap management. The systemd-swap service will be stopped. Not recommended "
+"unless you manage swap manually."
+msgstr ""
+"Dezactivează complet gestionarea swap-ului. Serviciul systemd-swap va fi oprit. Nu este recomandat "
+"decât dacă gestionezi swap-ul manual."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 222
+msgid "Compresses inactive memory before writing to disk. Reduces disk wear and improves performance."
+msgstr ""
+"Comprimă memoria inactivă înainte de a scrie pe disc. Reduce uzura discului și îmbunătățește "
+"performanța."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 226
+msgid ""
+"LZ4: Faster compression, uses more disk space.\n"
+"ZSTD: Better compression, uses less disk space."
+msgstr ""
+"LZ4: Compresie mai rapidă, folosește mai mult spațiu pe disc.  \n"
+"ZSTD: Compresie mai bună, folosește mai puțin spațiu pe disc."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 230
+msgid "How much RAM to use for compressed cache. Higher values = less disk writes but less free RAM."
+msgstr ""
+"Câtă memorie RAM să folosești pentru cache comprimat. Valori mai mari = mai puține scrieri pe disc, "
+"dar mai puțină memorie RAM liberă."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 234
+msgid ""
+"Automatically releases compressed memory when system needs more RAM. Helps prevent out-of-memory "
+"situations."
+msgstr ""
+"Eliberează automat memoria comprimată atunci când sistemul are nevoie de mai mult RAM. Ajută la "
+"prevenirea situațiilor de lipsă de memorie."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 238
+msgid ""
+"Only compress pages that achieve this compression ratio or better. Higher values = only "
+"well-compressing data is cached."
+msgstr ""
+"Comprimă doar paginile care ating acest raport de compresie sau mai bun. Valori mai mari = doar "
+"datele care se comprimă bine sunt stocate în cache."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 243
+msgid "Creates a compressed virtual disk in RAM. Stores more data without using physical disk."
+msgstr "Creează un disc virtual comprimat în RAM. Stochează mai multe date fără a folosi disc fizic."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
+msgid "Size of compressed RAM disk. Higher values allow storing more compressed data."
+msgstr ""
+"Dimensiunea discului RAM comprimat. Valorile mai mari permit stocarea unei cantități mai mari de "
+"date comprimate."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 250
+msgid ""
+"LZ4: Fast but less compression.\n"
+"ZSTD: Slower but better compression."
+msgstr ""
+"LZ4: Rapid, dar compresie mai mică.  \n"
+"ZSTD: Mai lent, dar compresie mai bună."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 253
+msgid "Maximum actual RAM that zram can use. Prevents zram from consuming too much memory."
+msgstr "RAM maximă actuală pe care zram o poate utiliza. Previne consumul excesiv de memorie de către zram."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 257
+msgid ""
+"Sets the priority for using zram vs other swap. Higher priority = zram is used first before disk "
+"swap."
+msgstr ""
+"Setează prioritatea pentru utilizarea zram față de alte swap-uri. Prioritate mai mare = zram este "
+"utilizat mai întâi înainte de swap-ul pe disc."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 261
+msgid "Allows zram to write incompressible data to disk. Saves RAM for data that compresses well."
+msgstr ""
+"Permite zram să scrie date incomprimabile pe disc. Economisește RAM pentru datele care se comprimă "
+"bine."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 266
+msgid "Creates swap files on disk when RAM is full. Files grow and shrink automatically as needed."
+msgstr ""
+"Creează fișiere de swap pe disc atunci când RAM-ul este plin. Fișierele cresc și se micșorează "
+"automat după cum este necesar."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 270
+msgid "Initial size when creating new swap files. Smaller = less disk space, Larger = fewer files."
+msgstr ""
+"Dimensiunea inițială la crearea de noi fișiere swap. Mai mic = mai puțin spațiu pe disc, Mai mare = "
+"mai puține fișiere."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 274
+msgid "Maximum size each swap file can grow to. Limits how much disk space a single file can use."
+msgstr ""
+"Dimensiunea maximă la care fiecare fișier de swap poate crește. Limitează cât de mult spațiu pe "
+"disc poate folosi un singur fișier."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 278
+msgid "Maximum number of swap files to create. More files = more available swap space."
+msgstr ""
+"Numărul maxim de fișiere de schimb de creat. Mai multe fișiere = mai mult spațiu de schimb "
+"disponibil."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 282
+msgid ""
+"How quickly swap files grow when more space is needed. Higher values = faster growth but more disk "
+"usage."
+msgstr ""
+"Cât de repede cresc fișierele de schimb atunci când este nevoie de mai mult spațiu. Valori mai mari "
+"= creștere mai rapidă, dar utilizare mai mare a discului."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
+msgid "Folder where swap files are stored. Choose a location on your fastest disk for best performance."
+msgstr ""
+"Folder în care sunt stocate fișierele de swap. Alegeți o locație pe cel mai rapid disc pentru cea "
+"mai bună performanță."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
+msgid "Protects active programs from being swapped out. Prevents system freezes when memory is low."
+msgstr ""
+"Protejează programele active de a fi înlocuite. Previne blocările sistemului atunci când memoria "
+"este scăzută."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
+msgid ""
+"How long to keep memory before allowing swap. Lower values = more aggressive swap, Higher = more "
+"protection."
+msgstr ""
+"Cât timp să păstrezi memoria înainte de a permite swap-ul. Valori mai mici = swap mai agresiv, "
+"valori mai mari = mai multă protecție."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 300
+msgid "Shows if the swap management service is running. Green = active and working, Red = stopped or error."
+msgstr ""
+"Arată dacă serviciul de gestionare a schimbului este activ. Verde = activ și funcțional, Roșu = "
+"oprit sau eroare."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 304
+msgid "Shows the current swap mode being used. This reflects the active configuration."
+msgstr "Afișează modul de schimb activ utilizat. Aceasta reflectă configurația activă."

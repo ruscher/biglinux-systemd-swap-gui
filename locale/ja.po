@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the biglinux-systemd-swap-gui package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: biglinux-systemd-swap-gui\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: attranslate\n"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 196
+msgid ""
+"Let the system choose the best settings based on your hardware. Zswap is used when disk space is at "
+"least 5x your RAM size. Otherwise, Zram is used to save disk space."
+msgstr ""
+"システムがハードウェアに基づいて最適な設定を選択します。ディスクスペースがRAMサイズの少なくとも5"
+"倍である場合、Zswapが使用されます。それ以外の場合は、ディスクスペースを節約するためにZramが使用されます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
+msgid ""
+"Zswap offers better performance but uses more disk space. Best for SSD with plenty of free space "
+"(5x RAM or more). Data is compressed in RAM before writing to disk files."
+msgstr ""
+"Zswapはより良いパフォーマンスを提供しますが、より多くのディスクスペースを使用します。十分な空きスペース（RAMの5"
+"倍以上）があるSSDに最適です。データはディスクファイルに書き込む前にRAM内で圧縮されます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 206
+msgid ""
+"Zram uses less disk space than Zswap by compressing data in RAM. Best for HDD or systems with "
+"limited disk space. Swap files on disk serve as backup when RAM is full."
+msgstr ""
+"Zramは、RAM内のデータを圧縮することでZswapよりも少ないディスクスペースを使用します。HDDや限られたディスクスペースのあるシステムに最適です。ディスク上のスワップファイルは、RAMが満杯の"
+"ときのバックアップとして機能します。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 211
+msgid ""
+"Uses only compressed RAM, no disk files are created. Best for systems with very limited disk space. "
+"All swap is handled entirely in memory."
+msgstr "圧縮RAMのみを使用し、ディスクファイルは作成されません。非常に限られたディスクスペースを持つシステムに最適です。すべてのスワップは完全にメモリ内で処理されます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 216
+msgid ""
+"Completely disable swap management. The systemd-swap service will be stopped. Not recommended "
+"unless you manage swap manually."
+msgstr "スワップ管理を完全に無効にします。systemd-swapサービスは停止されます。手動でスワップを管理しない限り、お勧めしません。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 222
+msgid "Compresses inactive memory before writing to disk. Reduces disk wear and improves performance."
+msgstr "ディスクに書き込む前に非アクティブメモリを圧縮します。ディスクの摩耗を減らし、パフォーマンスを向上させます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 226
+msgid ""
+"LZ4: Faster compression, uses more disk space.\n"
+"ZSTD: Better compression, uses less disk space."
+msgstr ""
+"LZ4: より高速な圧縮、より多くのディスクスペースを使用します。  \n"
+"ZSTD: より良い圧縮、より少ないディスクスペースを使用します。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 230
+msgid "How much RAM to use for compressed cache. Higher values = less disk writes but less free RAM."
+msgstr "圧縮キャッシュに使用するRAMの量。高い値 = ディスク書き込みが少なくなりますが、空きRAMが少なくなります。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 234
+msgid ""
+"Automatically releases compressed memory when system needs more RAM. Helps prevent out-of-memory "
+"situations."
+msgstr "システムがより多くのRAMを必要とする際に、自動的に圧縮メモリを解放します。メモリ不足の状況を防ぐのに役立ちます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 238
+msgid ""
+"Only compress pages that achieve this compression ratio or better. Higher values = only "
+"well-compressing data is cached."
+msgstr "この圧縮比率以上を達成するページのみを圧縮します。高い値 = よく圧縮されるデータのみがキャッシュされます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 243
+msgid "Creates a compressed virtual disk in RAM. Stores more data without using physical disk."
+msgstr "RAM内に圧縮された仮想ディスクを作成します。物理ディスクを使用せずに、より多くのデータを保存します。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
+msgid "Size of compressed RAM disk. Higher values allow storing more compressed data."
+msgstr "圧縮RAMディスクのサイズ。高い値は、より多くの圧縮データを保存することを可能にします。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 250
+msgid ""
+"LZ4: Fast but less compression.\n"
+"ZSTD: Slower but better compression."
+msgstr ""
+"LZ4: 高速だが圧縮率は低い。  \n"
+"ZSTD: 遅いが圧縮率は高い。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 253
+msgid "Maximum actual RAM that zram can use. Prevents zram from consuming too much memory."
+msgstr "zramが使用できる最大実際RAM。zramがメモリを過剰に消費するのを防ぎます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 257
+msgid ""
+"Sets the priority for using zram vs other swap. Higher priority = zram is used first before disk "
+"swap."
+msgstr "zramをディスクスワップの前に使用するための優先度を設定します。優先度が高いほど、zramが最初に使用されます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 261
+msgid "Allows zram to write incompressible data to disk. Saves RAM for data that compresses well."
+msgstr "zramが圧縮できないデータをディスクに書き込むことを許可します。圧縮がうまくできるデータのためにRAMを節約します。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 266
+msgid "Creates swap files on disk when RAM is full. Files grow and shrink automatically as needed."
+msgstr "RAMが満杯のときにディスク上にスワップファイルを作成します。ファイルは必要に応じて自動的に増減します。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 270
+msgid "Initial size when creating new swap files. Smaller = less disk space, Larger = fewer files."
+msgstr "新しいスワップファイルを作成する際の初期サイズ。小さい = ディスクスペースが少ない、大きい = ファイルが少ない。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 274
+msgid "Maximum size each swap file can grow to. Limits how much disk space a single file can use."
+msgstr "スワップファイルが成長できる最大サイズ。単一ファイルが使用できるディスクスペースの制限。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 278
+msgid "Maximum number of swap files to create. More files = more available swap space."
+msgstr "作成するスワップファイルの最大数。ファイルが多いほど、利用可能なスワップスペースが増えます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 282
+msgid ""
+"How quickly swap files grow when more space is needed. Higher values = faster growth but more disk "
+"usage."
+msgstr "必要なスペースが増えると、スワップファイルがどれだけ早く増加するか。値が高いほど成長が早くなりますが、ディスク使用量も増えます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
+msgid "Folder where swap files are stored. Choose a location on your fastest disk for best performance."
+msgstr "スワップファイルが保存されるフォルダー。最良のパフォーマンスのために、最も高速なディスク上の場所を選択してください。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
+msgid "Protects active programs from being swapped out. Prevents system freezes when memory is low."
+msgstr "アクティブなプログラムがスワップアウトされるのを保護します。メモリが不足しているときにシステムのフリーズを防ぎます。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
+msgid ""
+"How long to keep memory before allowing swap. Lower values = more aggressive swap, Higher = more "
+"protection."
+msgstr "スワップを許可する前にメモリを保持する時間。低い値 = より攻撃的なスワップ、高い値 = より多くの保護。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 300
+msgid "Shows if the swap management service is running. Green = active and working, Red = stopped or error."
+msgstr "スワップ管理サービスが実行中かどうかを表示します。緑 = アクティブで動作中、赤 = 停止またはエラー。"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 304
+msgid "Shows the current swap mode being used. This reflects the active configuration."
+msgstr "現在使用されているスワップモードを表示します。これはアクティブな構成を反映しています。"
