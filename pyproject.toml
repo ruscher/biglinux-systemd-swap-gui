@@ -6,7 +6,6 @@ build-backend = "uv_build"
 name = "biglinux-swap"
 version = "1.0.0"
 description = "BigLinux Swap Manager - GTK4/Adwaita GUI for systemd-swap configuration"
-readme = "README.md"
 license = "GPL-3.0-or-later"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
