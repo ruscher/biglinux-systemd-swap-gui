@@ -96,7 +96,7 @@ Terminal=false
 Icon=biglinux-swap
 Categories=System;Settings;GTK;
 StartupNotify=true
-StartupWMClass=org.biglinux.swap
+StartupWMClass=br.com.biglinux.swap
 
 Keywords=swap;zram;zswap;memory;ram;compress;systemd;settings;configuration;
 Keywords[bg]=swap;zram;zswap;памет;рам;компресия;система;настройки;конфигурация;
