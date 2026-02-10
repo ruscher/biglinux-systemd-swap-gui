@@ -7,15 +7,18 @@ Displays real-time memory and swap usage in a line chart.
 
 from __future__ import annotations
 
+import math
 from collections import deque
 from dataclasses import dataclass
 
 import gi
 
 gi.require_version("Gtk", "4.0")
-from gi.repository import Gtk
+gi.require_version("Adw", "1")
+from gi.repository import Adw, Gtk
 
 from biglinux_swap.config import CHART_MAX_HISTORY
+from biglinux_swap.i18n import _
 
 # Import cairo for type hints
 try:
@@ -127,8 +130,10 @@ class MemoryChartWidget(Gtk.DrawingArea):
     ) -> None:
         """Handle mouse motion for hover tooltip."""
         self._hover_x = x
+        old_index = self._hover_index
         self._update_hover_index()
-        self.queue_draw()
+        if self._hover_index != old_index:
+            self.queue_draw()
 
     def _on_leave(self, controller: Gtk.EventControllerMotion) -> None:
         """Handle mouse leaving the widget."""
@@ -176,10 +181,31 @@ class MemoryChartWidget(Gtk.DrawingArea):
         height: int,
     ) -> None:
         """Draw the chart using Cairo."""
-        # Background
-        cr.set_source_rgba(0.1, 0.1, 0.1, 0.9)
-        cr.rectangle(0, 0, width, height)
+        # Theme detection
+        style_manager = Adw.StyleManager.get_default()
+        is_dark = style_manager.get_dark()
+
+        if is_dark:
+            bg_color = (0.0, 0.0, 0.0, 1.0)
+            grid_color = (0.3, 0.3, 0.3, 0.5)
+            text_color = (0.9, 0.9, 0.9, 1.0)
+        else:
+            bg_color = (0.12, 0.12, 0.12, 1.0)
+            grid_color = (0.3, 0.3, 0.3, 0.5)
+            text_color = (0.9, 0.9, 0.9, 1.0)
+
+        # Convert history to list once for performance
+        history_list = list(self._history)
+
+        # Rounded rectangle background
+        radius = 12.0
+        self._draw_rounded_rect(cr, 0, 0, width, height, radius)
+        cr.set_source_rgba(*bg_color)
         cr.fill()
+
+        # Clip to rounded rectangle so all drawing respects corners
+        self._draw_rounded_rect(cr, 0, 0, width, height, radius)
+        cr.clip()
 
         # Margins
         margin_left = 45
@@ -194,7 +220,7 @@ class MemoryChartWidget(Gtk.DrawingArea):
             return
 
         # Draw grid lines
-        cr.set_source_rgba(0.3, 0.3, 0.3, 0.5)
+        cr.set_source_rgba(*grid_color)
         cr.set_line_width(1)
 
         for percent in [25, 50, 75, 100]:
@@ -205,14 +231,16 @@ class MemoryChartWidget(Gtk.DrawingArea):
 
             # Label
             cr.set_source_rgba(0.6, 0.6, 0.6, 1)
-            cr.select_font_face("Sans", 0, 0)
+            cr.select_font_face(
+                "Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL
+            )
             cr.set_font_size(10)
             cr.move_to(5, y + 4)
             cr.show_text(f"{percent}%")
 
         # Draw 0% line
         y_zero = margin_top + chart_height
-        cr.set_source_rgba(0.3, 0.3, 0.3, 0.5)
+        cr.set_source_rgba(*grid_color)
         cr.move_to(margin_left, y_zero)
         cr.line_to(margin_left + chart_width, y_zero)
         cr.stroke()
@@ -225,7 +253,7 @@ class MemoryChartWidget(Gtk.DrawingArea):
             # No data - show placeholder text
             cr.set_source_rgba(0.5, 0.5, 0.5, 1)
             cr.set_font_size(14)
-            text = "Collecting data..."
+            text = _("Collecting data...")
             extents = cr.text_extents(text)
             cr.move_to(
                 margin_left + (chart_width - extents.width) / 2,
@@ -236,7 +264,7 @@ class MemoryChartWidget(Gtk.DrawingArea):
 
         # Check if we have swap data (not just zswap, but any swap configuration)
         # If the last point has swap text other than empty/"N/A", we show 3-line layout
-        last_point = list(self._history)[-1] if self._history else None
+        last_point = history_list[-1] if history_list else None
         has_swap = last_point and last_point.swap_text and last_point.swap_text != "N/A"
 
         # Draw RAM line (green)
@@ -284,10 +312,14 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.3, 0.85, 0.4, 1.0)
             cr.rectangle(margin_left + 5, legend_y - 8, 12, 8)
             cr.fill()
-            cr.set_source_rgba(0.9, 0.9, 0.9, 1)
+            cr.set_source_rgba(*text_color)
             cr.set_font_size(10)
             cr.move_to(margin_left + 22, legend_y)
-            ram_text = f"RAM: {self._mem_used_text}" if self._mem_used_text else "RAM"
+            ram_text = (
+                _("RAM: {}").format(self._mem_used_text)
+                if self._mem_used_text
+                else _("RAM")
+            )
             cr.show_text(ram_text)
 
             # Swap in RAM legend (zswap stored data)
@@ -295,10 +327,12 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.95, 0.6, 0.2, 1.0)
             cr.rectangle(zswap_x, legend_y - 8, 12, 8)
             cr.fill()
-            cr.set_source_rgba(0.9, 0.9, 0.9, 1)
+            cr.set_source_rgba(*text_color)
             cr.move_to(zswap_x + 17, legend_y)
             zswap_legend = (
-                f"Swap RAM: {self._zswap_text}" if self._zswap_text else "Swap RAM"
+                _("Swap RAM: {}").format(self._zswap_text)
+                if self._zswap_text
+                else _("Swap RAM")
             )
             cr.show_text(zswap_legend)
 
@@ -307,12 +341,12 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.3, 0.5, 0.95, 1.0)
             cr.rectangle(swap_x, legend_y - 8, 12, 8)
             cr.fill()
-            cr.set_source_rgba(0.9, 0.9, 0.9, 1)
+            cr.set_source_rgba(*text_color)
             cr.move_to(swap_x + 17, legend_y)
             swap_text = (
-                f"Swap Disk: {self._swap_used_text}"
+                _("Swap Disk: {}").format(self._swap_used_text)
                 if self._swap_used_text
-                else "Swap Disk"
+                else _("Swap Disk")
             )
             cr.show_text(swap_text)
         else:
@@ -321,10 +355,14 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.3, 0.85, 0.4, 1.0)
             cr.rectangle(margin_left + 5, legend_y - 8, 12, 8)
             cr.fill()
-            cr.set_source_rgba(0.9, 0.9, 0.9, 1)
+            cr.set_source_rgba(*text_color)
             cr.set_font_size(11)
             cr.move_to(margin_left + 22, legend_y)
-            ram_text = f"RAM: {self._mem_used_text}" if self._mem_used_text else "RAM"
+            ram_text = (
+                _("RAM: {}").format(self._mem_used_text)
+                if self._mem_used_text
+                else _("RAM")
+            )
             cr.show_text(ram_text)
 
             # Swap legend
@@ -332,10 +370,12 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.3, 0.5, 0.95, 1.0)
             cr.rectangle(swap_x, legend_y - 8, 12, 8)
             cr.fill()
-            cr.set_source_rgba(0.9, 0.9, 0.9, 1)
+            cr.set_source_rgba(*text_color)
             cr.move_to(swap_x + 17, legend_y)
             swap_text = (
-                f"Swap: {self._swap_used_text}" if self._swap_used_text else "Swap"
+                _("Swap: {}").format(self._swap_used_text)
+                if self._swap_used_text
+                else _("Swap")
             )
             cr.show_text(swap_text)
 
@@ -343,7 +383,7 @@ class MemoryChartWidget(Gtk.DrawingArea):
         if self._hover_index is not None and 0 <= self._hover_index < len(
             self._history
         ):
-            point = list(self._history)[self._hover_index]
+            point = history_list[self._hover_index]
             num_points = len(self._history)
             x_step = chart_width / max(CHART_MAX_HISTORY - 1, 1)
             start_x = margin_left + chart_width - (num_points - 1) * x_step
@@ -359,37 +399,43 @@ class MemoryChartWidget(Gtk.DrawingArea):
             # RAM point
             ram_y = margin_top + chart_height * (1 - point.mem_used_percent / 100)
             cr.set_source_rgba(0.3, 0.85, 0.4, 1.0)
-            cr.arc(hover_x, ram_y, 4, 0, 2 * 3.14159)
+            cr.arc(hover_x, ram_y, 4, 0, 2 * math.pi)
             cr.fill()
 
             # Zswap point (if data exists)
             if point.zswap_percent > 0:
                 zswap_y = margin_top + chart_height * (1 - point.zswap_percent / 100)
                 cr.set_source_rgba(0.95, 0.6, 0.2, 1.0)
-                cr.arc(hover_x, zswap_y, 4, 0, 2 * 3.14159)
+                cr.arc(hover_x, zswap_y, 4, 0, 2 * math.pi)
                 cr.fill()
 
             # Swap point
             swap_y = margin_top + chart_height * (1 - point.swap_used_percent / 100)
             cr.set_source_rgba(0.3, 0.5, 0.95, 1.0)
-            cr.arc(hover_x, swap_y, 4, 0, 2 * 3.14159)
+            cr.arc(hover_x, swap_y, 4, 0, 2 * math.pi)
             cr.fill()
 
             # Calculate how many seconds ago this reading was
             seconds_ago = num_points - self._hover_index - 1
 
             # Build tooltip text with absolute values and time
-            time_text = f"{seconds_ago}s ago" if seconds_ago > 0 else "now"
+            time_text = (
+                _("{}s ago").format(seconds_ago) if seconds_ago > 0 else _("now")
+            )
             # Always show Swap RAM and Swap Disk when swap is configured
             has_swap_text = point.swap_text and point.swap_text != "N/A"
             if has_swap_text:
                 zswap_display = point.zswap_text if point.zswap_text else "0 B"
-                tooltip_text = f"[{time_text}]  RAM: {point.mem_text}  Swap RAM: {zswap_display}  Swap Disk: {point.swap_text}"
+                tooltip_text = _("[{}]  RAM: {}  Swap RAM: {}  Swap Disk: {}").format(
+                    time_text, point.mem_text, zswap_display, point.swap_text
+                )
             elif point.mem_text:
-                tooltip_text = f"[{time_text}]  RAM: {point.mem_text}"
+                tooltip_text = _("[{}]  RAM: {}").format(time_text, point.mem_text)
             else:
                 # Fallback to percentages if no text available
-                tooltip_text = f"[{time_text}]  RAM: {point.mem_used_percent:.1f}%"
+                tooltip_text = _("[{}]  RAM: {}%").format(
+                    time_text, f"{point.mem_used_percent:.1f}"
+                )
             cr.set_font_size(10)
             extents = cr.text_extents(tooltip_text)
 
@@ -416,6 +462,23 @@ class MemoryChartWidget(Gtk.DrawingArea):
             cr.set_source_rgba(0.95, 0.95, 0.95, 1)
             cr.move_to(tooltip_x, tooltip_y + extents.height)
             cr.show_text(tooltip_text)
+
+    @staticmethod
+    def _draw_rounded_rect(
+        cr: cairo.Context,
+        x: float,
+        y: float,
+        w: float,
+        h: float,
+        r: float,
+    ) -> None:
+        """Draw a rounded rectangle path."""
+        cr.new_sub_path()
+        cr.arc(x + w - r, y + r, r, -math.pi / 2, 0)
+        cr.arc(x + w - r, y + h - r, r, 0, math.pi / 2)
+        cr.arc(x + r, y + h - r, r, math.pi / 2, math.pi)
+        cr.arc(x + r, y + r, r, math.pi, 3 * math.pi / 2)
+        cr.close_path()
 
     def _draw_line(
         self,
@@ -480,98 +543,3 @@ class MemoryChartWidget(Gtk.DrawingArea):
         cr.line_to(start_x, margin_top + chart_height)
         cr.close_path()
         cr.fill()
-
-
-class MemoryBarsWidget(Gtk.Box):
-    """
-    Widget showing memory and swap usage as horizontal bars with labels.
-
-    Alternative to the chart for simpler display.
-    """
-
-    def __init__(self) -> None:
-        """Initialize the memory bars widget."""
-        super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-
-        self.set_margin_start(12)
-        self.set_margin_end(12)
-        self.set_margin_top(12)
-        self.set_margin_bottom(12)
-
-        # RAM bar
-        ram_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
-
-        ram_label_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        ram_title = Gtk.Label(label="RAM")
-        ram_title.set_halign(Gtk.Align.START)
-        ram_title.add_css_class("heading")
-        ram_label_box.append(ram_title)
-
-        self._ram_value_label = Gtk.Label(label="")
-        self._ram_value_label.set_halign(Gtk.Align.END)
-        self._ram_value_label.set_hexpand(True)
-        self._ram_value_label.add_css_class("dim-label")
-        ram_label_box.append(self._ram_value_label)
-
-        ram_box.append(ram_label_box)
-
-        self._ram_bar = Gtk.LevelBar()
-        self._ram_bar.set_min_value(0)
-        self._ram_bar.set_max_value(100)
-        self._ram_bar.set_value(0)
-        self._ram_bar.add_offset_value("low", 50)
-        self._ram_bar.add_offset_value("high", 75)
-        self._ram_bar.add_offset_value("full", 90)
-        ram_box.append(self._ram_bar)
-
-        self.append(ram_box)
-
-        # Swap bar
-        swap_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
-
-        swap_label_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
-        swap_title = Gtk.Label(label="Swap")
-        swap_title.set_halign(Gtk.Align.START)
-        swap_title.add_css_class("heading")
-        swap_label_box.append(swap_title)
-
-        self._swap_value_label = Gtk.Label(label="")
-        self._swap_value_label.set_halign(Gtk.Align.END)
-        self._swap_value_label.set_hexpand(True)
-        self._swap_value_label.add_css_class("dim-label")
-        swap_label_box.append(self._swap_value_label)
-
-        swap_box.append(swap_label_box)
-
-        self._swap_bar = Gtk.LevelBar()
-        self._swap_bar.set_min_value(0)
-        self._swap_bar.set_max_value(100)
-        self._swap_bar.set_value(0)
-        self._swap_bar.add_offset_value("low", 30)
-        self._swap_bar.add_offset_value("high", 60)
-        self._swap_bar.add_offset_value("full", 90)
-        swap_box.append(self._swap_bar)
-
-        self.append(swap_box)
-
-    def update(
-        self,
-        mem_percent: float,
-        mem_text: str,
-        swap_percent: float,
-        swap_text: str,
-    ) -> None:
-        """
-        Update the bars with new values.
-
-        Args:
-            mem_percent: RAM usage percentage
-            mem_text: RAM usage text (e.g., "8.2 / 16 GiB")
-            swap_percent: Swap usage percentage
-            swap_text: Swap usage text
-        """
-        self._ram_bar.set_value(mem_percent)
-        self._ram_value_label.set_text(mem_text)
-
-        self._swap_bar.set_value(swap_percent)
-        self._swap_value_label.set_text(swap_text)

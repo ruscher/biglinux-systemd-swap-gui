@@ -8,20 +8,20 @@ Adwaita Application with lazy service initialization.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, GLib
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from biglinux_swap.config import APP_ID, APP_NAME, APP_VERSION
+from biglinux_swap.i18n import _
 from biglinux_swap.services import ConfigService, MeminfoService, SwapService
+from biglinux_swap.ui.welcome_dialog import WelcomeDialog
 from biglinux_swap.window import SwapWindow
 
-if TYPE_CHECKING:
-    pass
 
 logger = logging.getLogger(__name__)
 
@@ -74,6 +74,15 @@ class SwapApplication(Adw.Application):
         """Handle application startup."""
         Adw.Application.do_startup(self)
 
+        # Register local icons if available (for development/local execution)
+        project_root = Path(__file__).resolve().parent.parent.parent
+        icon_path = project_root / "usr" / "share" / "icons"
+        if icon_path.exists():
+            display = Gdk.Display.get_default()
+            if display:
+                theme = Gtk.IconTheme.get_for_display(display)
+                theme.add_search_path(str(icon_path))
+
         # Set up application actions
         self._setup_actions()
 
@@ -103,6 +112,11 @@ class SwapApplication(Adw.Application):
         self.add_action(refresh_action)
         self.set_accels_for_action("app.refresh", ["F5"])
 
+        # Welcome action
+        welcome_action = Gio.SimpleAction.new("welcome", None)
+        welcome_action.connect("activate", self._on_welcome)
+        self.add_action(welcome_action)
+
         # Restore defaults action
         restore_defaults_action = Gio.SimpleAction.new("restore_defaults", None)
         restore_defaults_action.connect("activate", self._on_restore_defaults)
@@ -117,6 +131,10 @@ class SwapApplication(Adw.Application):
                 meminfo_service=self.meminfo_service,
                 swap_service=self.swap_service,
             )
+            # Show welcome dialog on first run
+            if WelcomeDialog.should_show_welcome():
+                welcome = WelcomeDialog(self._window)
+                welcome.present()
 
         self._window.present()
 
@@ -148,12 +166,12 @@ class SwapApplication(Adw.Application):
         about.set_version(APP_VERSION)
         about.set_developer_name("BigLinux")
         about.set_license_type(Gtk.License.GPL_3_0)
-        about.set_comments("Configure swap settings for optimal performance")
+        about.set_comments(_("Configure swap settings for optimal performance"))
         about.set_website("https://www.biglinux.com.br")
         about.set_issue_url(
             "https://github.com/biglinux/biglinux-systemd-swap-gui/issues"
         )
-        about.set_application_icon(APP_ID)
+        about.set_application_icon("biglinux-swap")
 
         about.set_developers(
             [
@@ -161,7 +179,7 @@ class SwapApplication(Adw.Application):
             ]
         )
 
-        about.set_copyright("© 2025 BigLinux")
+        about.set_copyright("© 2025-2026 BigLinux")
 
         if self._window:
             about.present(self._window)
@@ -193,6 +211,12 @@ class SwapApplication(Adw.Application):
         if self._window:
             self._window.restore_defaults()
 
-
-# Need to import Gtk for License enum
-from gi.repository import Gtk  # noqa: E402
+    def _on_welcome(
+        self,
+        action: Gio.SimpleAction,  # noqa: ARG002
+        param: GLib.Variant | None,  # noqa: ARG002
+    ) -> None:
+        """Show welcome dialog."""
+        if self._window:
+            welcome = WelcomeDialog(self._window)
+            welcome.present()

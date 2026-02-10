@@ -12,8 +12,12 @@ import json
 import logging
 from dataclasses import asdict, dataclass, field
 from enum import Enum
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as _metadata_version
 from pathlib import Path
 from typing import Any
+
+from biglinux_swap.i18n import _
 
 logger = logging.getLogger(__name__)
 
@@ -22,8 +26,11 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 APP_ID = "br.com.biglinux.swap"
-APP_NAME = "Swap Manager"
-APP_VERSION = "1.0.0"
+APP_NAME = _("Swap Manager")
+try:
+    APP_VERSION = _metadata_version("biglinux-swap")
+except PackageNotFoundError:
+    APP_VERSION = "1.0.0"
 APP_DEVELOPER = "BigLinux Team"
 APP_WEBSITE = "https://github.com/biglinux/biglinux-systemd-swap-gui"
 APP_ISSUE_URL = f"{APP_WEBSITE}/issues"
@@ -89,19 +96,23 @@ class SwapMode(Enum):
 
 
 SWAP_MODE_NAMES: dict[SwapMode, str] = {
-    SwapMode.AUTO: "Auto (Recommended)",
-    SwapMode.ZSWAP_SWAPFILE: "Zswap + SwapFile",
-    SwapMode.ZRAM_SWAPFILE: "Zram + SwapFile",
-    SwapMode.ZRAM_ONLY: "Zram Only",
-    SwapMode.DISABLED: "Disabled",
+    SwapMode.AUTO: _("Auto (Recommended)"),
+    SwapMode.ZSWAP_SWAPFILE: _("Zswap + SwapFile"),
+    SwapMode.ZRAM_SWAPFILE: _("Zram + SwapFile"),
+    SwapMode.ZRAM_ONLY: _("Zram Only"),
+    SwapMode.DISABLED: _("Disabled"),
 }
 
 SWAP_MODE_DESCRIPTIONS: dict[SwapMode, str] = {
-    SwapMode.AUTO: "Automatically detects the best mode for your system",
-    SwapMode.ZSWAP_SWAPFILE: "Compressed RAM cache + dynamic swap files (best for desktop)",
-    SwapMode.ZRAM_SWAPFILE: "Compressed RAM block device + swap files",
-    SwapMode.ZRAM_ONLY: "Only Zram, no disk swap (for systems without disk swap support)",
-    SwapMode.DISABLED: "Disable swap management (stops the service)",
+    SwapMode.AUTO: _("Automatically detects the best mode for your system"),
+    SwapMode.ZSWAP_SWAPFILE: _(
+        "Compressed RAM cache + dynamic swap files (best for desktop)"
+    ),
+    SwapMode.ZRAM_SWAPFILE: _("Compressed RAM block device + swap files"),
+    SwapMode.ZRAM_ONLY: _(
+        "Only Zram, no disk swap (for systems without disk swap support)"
+    ),
+    SwapMode.DISABLED: _("Disable swap management (stops the service)"),
 }
 
 
@@ -114,9 +125,24 @@ class Compressor(Enum):
 
 
 COMPRESSOR_NAMES: dict[Compressor, str] = {
-    Compressor.LZ4: "LZ4 (Fastest)",
-    Compressor.ZSTD: "Zstd (Balanced)",
-    Compressor.LZO: "LZO (Legacy)",
+    Compressor.LZ4: _("LZ4 (Fastest)"),
+    Compressor.ZSTD: _("Zstd (Balanced)"),
+    Compressor.LZO: _("LZO (Legacy)"),
+}
+
+
+class RecompressAlgorithm(Enum):
+    """Available recompression algorithms (secondary compression for idle/huge pages)."""
+
+    ZSTD = "zstd"
+    DEFLATE = "deflate"
+    LZ4HC = "lz4hc"
+
+
+RECOMPRESS_ALG_NAMES: dict[RecompressAlgorithm, str] = {
+    RecompressAlgorithm.ZSTD: _("Zstd (Best ratio)"),
+    RecompressAlgorithm.DEFLATE: _("Deflate (Balanced)"),
+    RecompressAlgorithm.LZ4HC: _("LZ4HC (Faster)"),
 }
 
 
@@ -135,15 +161,15 @@ class MglruTtl(Enum):
 
 
 MGLRU_TTL_NAMES: dict[MglruTtl, str] = {
-    MglruTtl.AUTO: "Auto (Based on RAM)",
-    MglruTtl.DISABLED: "Disabled",
-    MglruTtl.MS_100: "100ms",
-    MglruTtl.MS_300: "300ms",
-    MglruTtl.MS_600: "600ms",
-    MglruTtl.VERY_HIGH_RAM: "1s (16GB+)",
-    MglruTtl.HIGH_RAM: "3s (4-8GB)",
-    MglruTtl.MEDIUM_RAM: "5s (2-4GB)",
-    MglruTtl.LOW_RAM: "10s (1-2GB)",
+    MglruTtl.AUTO: _("Auto (Based on RAM)"),
+    MglruTtl.DISABLED: _("Disabled"),
+    MglruTtl.MS_100: _("100ms"),
+    MglruTtl.MS_300: _("300ms"),
+    MglruTtl.MS_600: _("600ms"),
+    MglruTtl.VERY_HIGH_RAM: _("1s (16GB+)"),
+    MglruTtl.HIGH_RAM: _("3s (4-8GB)"),
+    MglruTtl.MEDIUM_RAM: _("5s (2-4GB)"),
+    MglruTtl.LOW_RAM: _("10s (1-2GB)"),
 }
 
 
@@ -184,6 +210,11 @@ ZRAM_WRITEBACK_SIZE_DEFAULT = "1G"
 
 ZRAM_WRITEBACK_MAX_SIZE_OPTIONS = ["2G", "4G", "8G", "16G", "32G"]
 ZRAM_WRITEBACK_MAX_SIZE_DEFAULT = "8G"
+
+# Zram recompression limits
+ZRAM_RECOMPRESS_THRESHOLD_MIN = 512
+ZRAM_RECOMPRESS_THRESHOLD_MAX = 4096
+ZRAM_RECOMPRESS_THRESHOLD_DEFAULT = 3072
 
 # =============================================================================
 # SwapFile limits
@@ -243,12 +274,12 @@ class StorageType(Enum):
 
 
 STORAGE_TYPE_NAMES: dict[StorageType, str] = {
-    StorageType.NVME: "NVMe SSD",
-    StorageType.SSD: "SATA SSD",
-    StorageType.HDD: "Hard Drive",
-    StorageType.EMMC: "eMMC",
-    StorageType.SD: "SD Card",
-    StorageType.UNKNOWN: "Unknown",
+    StorageType.NVME: _("NVMe SSD"),
+    StorageType.SSD: _("SATA SSD"),
+    StorageType.HDD: _("Hard Drive"),
+    StorageType.EMMC: _("eMMC"),
+    StorageType.SD: _("SD Card"),
+    StorageType.UNKNOWN: _("Unknown"),
 }
 
 # Swap priorities by storage type (PLANNING.md 12.6.3)
@@ -288,11 +319,11 @@ class DiscardPolicy(Enum):
 
 
 DISCARD_POLICY_NAMES: dict[DiscardPolicy, str] = {
-    DiscardPolicy.NONE: "Disabled",
-    DiscardPolicy.ONCE: "At deactivation (recommended)",
-    DiscardPolicy.PAGES: "Continuous (may impact performance)",
-    DiscardPolicy.BOTH: "Both modes",
-    DiscardPolicy.AUTO: "Auto-detect",
+    DiscardPolicy.NONE: _("Disabled"),
+    DiscardPolicy.ONCE: _("At deactivation (recommended)"),
+    DiscardPolicy.PAGES: _("Continuous (may impact performance)"),
+    DiscardPolicy.BOTH: _("Both modes"),
+    DiscardPolicy.AUTO: _("Auto-detect"),
 }
 
 
@@ -317,13 +348,15 @@ class ZramConfig:
     """Zram configuration."""
 
     size_percent: int = ZRAM_SIZE_DEFAULT
-    alg: Compressor = Compressor.LZ4
+    alg: Compressor = Compressor.ZSTD
     mem_limit_percent: int = ZRAM_MEM_LIMIT_DEFAULT
     priority: int = ZRAM_PRIORITY_DEFAULT
     writeback_enabled: bool = False
     writeback_size: str = "1G"
     writeback_max_size: str = "8G"
     writeback_threshold: int = 50
+    recompress_enabled: bool = True
+    recompress_algorithm: RecompressAlgorithm = RecompressAlgorithm.ZSTD
 
 
 @dataclass
@@ -415,6 +448,7 @@ class SwapConfig:
         data["mglru_min_ttl"] = self.mglru_min_ttl.value
         data["zswap"]["compressor"] = self.zswap.compressor.value
         data["zram"]["alg"] = self.zram.alg.value
+        data["zram"]["recompress_algorithm"] = self.zram.recompress_algorithm.value
         data["swapfile"]["discard_policy"] = self.swapfile.discard_policy.value
         return data
 
@@ -431,27 +465,42 @@ class SwapConfig:
 
         if "zswap" in data:
             zs = data["zswap"]
+            max_pool = zs.get("max_pool_percent", ZSWAP_MAX_POOL_DEFAULT)
+            max_pool = max(ZSWAP_MAX_POOL_MIN, min(ZSWAP_MAX_POOL_MAX, max_pool))
+            accept_thresh = zs.get("accept_threshold", ZSWAP_ACCEPT_THRESHOLD_DEFAULT)
+            accept_thresh = max(
+                ZSWAP_ACCEPT_THRESHOLD_MIN,
+                min(ZSWAP_ACCEPT_THRESHOLD_MAX, accept_thresh),
+            )
             config.zswap = ZswapConfig(
                 compressor=Compressor(zs.get("compressor", "zstd")),
-                max_pool_percent=zs.get("max_pool_percent", ZSWAP_MAX_POOL_DEFAULT),
+                max_pool_percent=max_pool,
                 zpool=zs.get("zpool", "zsmalloc"),
                 shrinker_enabled=zs.get("shrinker_enabled", True),
-                accept_threshold=zs.get(
-                    "accept_threshold", ZSWAP_ACCEPT_THRESHOLD_DEFAULT
-                ),
+                accept_threshold=accept_thresh,
             )
 
         if "zram" in data:
             zr = data["zram"]
+            size_pct = zr.get("size_percent", ZRAM_SIZE_DEFAULT)
+            size_pct = max(ZRAM_SIZE_MIN, min(ZRAM_SIZE_MAX, size_pct))
+            mem_limit = zr.get("mem_limit_percent", ZRAM_MEM_LIMIT_DEFAULT)
+            mem_limit = max(ZRAM_MEM_LIMIT_MIN, min(ZRAM_MEM_LIMIT_MAX, mem_limit))
+            priority = zr.get("priority", ZRAM_PRIORITY_DEFAULT)
+            priority = max(ZRAM_PRIORITY_MIN, min(ZRAM_PRIORITY_MAX, priority))
             config.zram = ZramConfig(
-                size_percent=zr.get("size_percent", ZRAM_SIZE_DEFAULT),
+                size_percent=size_pct,
                 alg=Compressor(zr.get("alg", "lz4")),
-                mem_limit_percent=zr.get("mem_limit_percent", ZRAM_MEM_LIMIT_DEFAULT),
-                priority=zr.get("priority", ZRAM_PRIORITY_DEFAULT),
+                mem_limit_percent=mem_limit,
+                priority=priority,
                 writeback_enabled=zr.get("writeback_enabled", False),
                 writeback_size=zr.get("writeback_size", "1G"),
                 writeback_max_size=zr.get("writeback_max_size", "8G"),
                 writeback_threshold=zr.get("writeback_threshold", 50),
+                recompress_enabled=zr.get("recompress_enabled", True),
+                recompress_algorithm=RecompressAlgorithm(
+                    zr.get("recompress_algorithm", "zstd")
+                ),
             )
 
         sf = data.get("swapfile", {})
@@ -462,25 +511,48 @@ class SwapConfig:
             except ValueError:
                 discard_policy = DiscardPolicy.AUTO
 
+            max_count = sf.get("max_count", SWAPFILE_MAX_COUNT_DEFAULT)
+            max_count = max(
+                SWAPFILE_MAX_COUNT_MIN, min(SWAPFILE_MAX_COUNT_MAX, max_count)
+            )
+            scaling_step = sf.get("scaling_step", SWAPFILE_SCALING_STEP_DEFAULT)
+            scaling_step = max(
+                SWAPFILE_SCALING_STEP_MIN, min(SWAPFILE_SCALING_STEP_MAX, scaling_step)
+            )
+            shrink_thresh = sf.get(
+                "shrink_threshold", SWAPFILE_SHRINK_THRESHOLD_DEFAULT
+            )
+            shrink_thresh = max(
+                SWAPFILE_SHRINK_THRESHOLD_MIN,
+                min(SWAPFILE_SHRINK_THRESHOLD_MAX, shrink_thresh),
+            )
+            safe_head = sf.get("safe_headroom", SWAPFILE_SAFE_HEADROOM_DEFAULT)
+            safe_head = max(
+                SWAPFILE_SAFE_HEADROOM_MIN, min(SWAPFILE_SAFE_HEADROOM_MAX, safe_head)
+            )
+            part_thresh = sf.get(
+                "partition_threshold", SWAPFILE_PARTITION_THRESHOLD_DEFAULT
+            )
+            part_thresh = max(
+                SWAPFILE_PARTITION_THRESHOLD_MIN,
+                min(SWAPFILE_PARTITION_THRESHOLD_MAX, part_thresh),
+            )
+
             config.swapfile = SwapFileConfig(
                 enabled=sf.get("enabled", True),
                 path=sf.get("path", "/swapfile"),
                 chunk_size=sf.get("chunk_size", CHUNK_SIZE_DEFAULT),
                 max_chunk_size=sf.get("max_chunk_size", MAX_CHUNK_SIZE_DEFAULT),
-                max_count=sf.get("max_count", SWAPFILE_MAX_COUNT_DEFAULT),
+                max_count=max_count,
                 min_count=sf.get("min_count", SWAPFILE_MIN_COUNT),
-                scaling_step=sf.get("scaling_step", SWAPFILE_SCALING_STEP_DEFAULT),
-                shrink_threshold=sf.get(
-                    "shrink_threshold", SWAPFILE_SHRINK_THRESHOLD_DEFAULT
-                ),
-                safe_headroom=sf.get("safe_headroom", SWAPFILE_SAFE_HEADROOM_DEFAULT),
+                scaling_step=scaling_step,
+                shrink_threshold=shrink_thresh,
+                safe_headroom=safe_head,
                 use_partitions=sf.get("use_partitions", True),
                 partition_priority=sf.get(
                     "partition_priority", SWAPFILE_PARTITION_PRIORITY_DEFAULT
                 ),
-                partition_threshold=sf.get(
-                    "partition_threshold", SWAPFILE_PARTITION_THRESHOLD_DEFAULT
-                ),
+                partition_threshold=part_thresh,
                 min_count_with_partitions=sf.get("min_count_with_partitions", 0),
                 discard_policy=discard_policy,
                 direct_io=sf.get("direct_io", True),

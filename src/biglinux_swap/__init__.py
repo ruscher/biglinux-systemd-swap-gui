@@ -16,7 +16,6 @@ Usage:
 import sys
 from pathlib import Path
 
-__version__ = "1.0.0"
 __author__ = "BigLinux Team"
 __license__ = "GPL-3.0"
 
@@ -43,6 +42,8 @@ from biglinux_swap.config import (
     ZswapConfig,
 )
 from biglinux_swap.main import main
+
+__version__ = APP_VERSION
 
 __all__ = [
     "APP_ID",

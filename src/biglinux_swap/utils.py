@@ -8,12 +8,13 @@ Pure Python helpers: polkit operations and tooltip management.
 from __future__ import annotations
 
 import contextlib
-import gettext
-import locale
 import logging
+import shlex
 import shutil
 import subprocess
 import tempfile
+import threading
+from collections.abc import Callable
 from pathlib import Path
 
 import gi
@@ -24,6 +25,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Adw, Gdk, GLib, Gtk
 
 from biglinux_swap.config import CONFIG_PATH
+from biglinux_swap.i18n import _
 
 logger = logging.getLogger(__name__)
 
@@ -33,111 +35,124 @@ logger = logging.getLogger(__name__)
 # =============================================================================
 
 
-def apply_config_with_pkexec(content: str) -> tuple[bool, str]:
-    """
-    Apply configuration using pkexec.
+def apply_config_with_pkexec(
+    content: str,
+    on_complete: Callable[[bool, str], None] | None = None,
+) -> None:
+    """Apply configuration using pkexec (non-blocking)."""
 
-    Args:
-        content: Configuration file content
-
-    Returns:
-        Tuple of (success, message)
-    """
-    try:
-        if not shutil.which("pkexec"):
-            return False, "pkexec not found"
-
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".conf", prefix="swap-", delete=False
-        ) as tmp:
-            tmp.write(content)
-            tmp_path = tmp.name
-
+    def _run():
         try:
-            # Use single pkexec call with bash to copy and set permissions
+            if not shutil.which("pkexec"):
+                if on_complete:
+                    GLib.idle_add(on_complete, False, "pkexec not found")
+                return
+
+            with tempfile.NamedTemporaryFile(
+                mode="w", suffix=".conf", prefix="swap-", delete=False
+            ) as tmp:
+                tmp.write(content)
+                tmp_path = tmp.name
+
+            cmd = [
+                "pkexec",
+                "/bin/bash",
+                "-c",
+                f"cp {shlex.quote(tmp_path)} {shlex.quote(str(CONFIG_PATH))} && chmod 644 {shlex.quote(str(CONFIG_PATH))}",
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+            Path(tmp_path).unlink(missing_ok=True)
+            success = result.returncode == 0
+            msg = result.stderr.strip() if not success else ""
+            if on_complete:
+                GLib.idle_add(on_complete, success, msg)
+        except subprocess.TimeoutExpired:
+            if on_complete:
+                GLib.idle_add(on_complete, False, "Operation timed out")
+        except Exception as e:
+            logger.exception("Config apply error")
+            if on_complete:
+                GLib.idle_add(on_complete, False, str(e))
+
+    threading.Thread(target=_run, daemon=True).start()
+
+
+def restart_systemd_swap(
+    on_complete: Callable[[bool, str], None] | None = None,
+) -> None:
+    """Restart systemd-swap service using pkexec (non-blocking)."""
+
+    def _run():
+        try:
+            result = subprocess.run(
+                ["pkexec", "systemctl", "restart", "systemd-swap.service"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            success = result.returncode == 0
+            msg = result.stderr.strip() if not success else ""
+            if on_complete:
+                GLib.idle_add(on_complete, success, msg)
+        except Exception as e:
+            if on_complete:
+                GLib.idle_add(on_complete, False, str(e))
+
+    threading.Thread(target=_run, daemon=True).start()
+
+
+def stop_systemd_swap(on_complete: Callable[[bool, str], None] | None = None) -> None:
+    """Stop and disable systemd-swap service using pkexec (non-blocking)."""
+
+    def _run():
+        try:
             result = subprocess.run(
                 [
                     "pkexec",
                     "/bin/bash",
                     "-c",
-                    f'cp "{tmp_path}" "{CONFIG_PATH}" && chmod 644 "{CONFIG_PATH}"',
+                    "systemctl stop systemd-swap.service && systemctl disable systemd-swap.service",
                 ],
                 capture_output=True,
                 text=True,
-                check=False,
+                timeout=30,
             )
-            if result.returncode != 0:
-                return False, result.stderr.strip() or "Unknown error"
+            success = result.returncode == 0
+            msg = result.stderr.strip() if not success else ""
+            if on_complete:
+                GLib.idle_add(on_complete, success, msg)
+        except Exception as e:
+            if on_complete:
+                GLib.idle_add(on_complete, False, str(e))
 
-            return True, "Configuration applied successfully.\n\nRestart your computer to apply changes."
-        finally:
-            Path(tmp_path).unlink(missing_ok=True)
-
-    except (FileNotFoundError, subprocess.SubprocessError, OSError) as e:
-        logger.exception("Config apply error")
-        return False, str(e)
-
-
-def restart_systemd_swap() -> tuple[bool, str]:
-    """Restart systemd-swap service using pkexec."""
-    try:
-        result = subprocess.run(
-            ["pkexec", "systemctl", "restart", "systemd-swap.service"],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if result.returncode != 0:
-            return False, result.stderr.strip() or "Unknown error"
-        return True, "Service restarted"
-    except subprocess.SubprocessError as e:
-        return False, str(e)
+    threading.Thread(target=_run, daemon=True).start()
 
 
-def stop_systemd_swap() -> tuple[bool, str]:
-    """Stop and disable systemd-swap service using pkexec."""
-    try:
-        # Stop and disable the service in a single pkexec call
-        result = subprocess.run(
-            [
-                "pkexec",
-                "/bin/bash",
-                "-c",
-                "systemctl stop systemd-swap.service && systemctl disable systemd-swap.service",
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if result.returncode != 0:
-            return False, result.stderr.strip() or "Unknown error"
+def enable_systemd_swap(on_complete: Callable[[bool, str], None] | None = None) -> None:
+    """Enable and start systemd-swap service using pkexec (non-blocking)."""
 
-        return True, "Service stopped and disabled"
-    except subprocess.SubprocessError as e:
-        return False, str(e)
+    def _run():
+        try:
+            result = subprocess.run(
+                [
+                    "pkexec",
+                    "/bin/bash",
+                    "-c",
+                    "systemctl enable systemd-swap.service && systemctl start systemd-swap.service",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+            success = result.returncode == 0
+            msg = result.stderr.strip() if not success else ""
+            if on_complete:
+                GLib.idle_add(on_complete, success, msg)
+        except Exception as e:
+            if on_complete:
+                GLib.idle_add(on_complete, False, str(e))
 
-
-def enable_systemd_swap() -> tuple[bool, str]:
-    """Enable and start systemd-swap service using pkexec."""
-    try:
-        # Enable and start the service in a single pkexec call
-        result = subprocess.run(
-            [
-                "pkexec",
-                "/bin/bash",
-                "-c",
-                "systemctl enable systemd-swap.service && systemctl start systemd-swap.service",
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-        if result.returncode != 0:
-            return False, result.stderr.strip() or "Unknown error"
-
-        return True, "Service enabled and started"
-    except subprocess.SubprocessError as e:
-        return False, str(e)
+    threading.Thread(target=_run, daemon=True).start()
 
 
 def check_pkexec_available() -> bool:
@@ -157,324 +172,247 @@ def run_as_root(command: list[str]) -> tuple[bool, str, str]:
 
 
 # =============================================================================
-# Internationalization
-# =============================================================================
-
-LOCALE_DIR = Path("/usr/share/locale")
-DOMAIN = "biglinux-swap"
-
-with contextlib.suppress(locale.Error):
-    locale.setlocale(locale.LC_ALL, "")
-
-try:
-    translation = gettext.translation(DOMAIN, LOCALE_DIR, fallback=True)
-    _ = translation.gettext
-except Exception:
-
-    def _(text: str) -> str:
-        return text
-
-
-def _is_x11_backend() -> bool:
-    """Check if running on X11 backend."""
-    try:
-        display = Gdk.Display.get_default()
-        if display is None:
-            return False
-        return "X11" in type(display).__name__
-    except Exception:
-        return False
-
-
-# =============================================================================
 # Tooltip Texts
 # =============================================================================
 
 TOOLTIPS = {
     # Mode selection
-    "mode_auto": _(
-        "Let the system choose the best settings based on your hardware. "
-        "Zswap is used when disk space is at least 5x your RAM size. "
-        "Otherwise, Zram is used to save disk space."
-    ),
-    "mode_zswap_swapfile": _(
-        "Zswap offers better performance but uses more disk space. "
-        "Best for SSD with plenty of free space (5x RAM or more). "
-        "Data is compressed in RAM before writing to disk files."
-    ),
-    "mode_zram_swapfile": _(
-        "Zram uses less disk space than Zswap by compressing data in RAM. "
-        "Best for HDD or systems with limited disk space. "
-        "Swap files on disk serve as backup when RAM is full."
-    ),
-    "mode_zram_only": _(
-        "Uses only compressed RAM, no disk files are created. "
-        "Best for systems with very limited disk space. "
-        "All swap is handled entirely in memory."
-    ),
-    "mode_disabled": _(
-        "Completely disable swap management. "
-        "The systemd-swap service will be stopped. "
-        "Not recommended unless you manage swap manually."
+    "mode": _(
+        "Auto: Detects the best settings based on your hardware.\n"
+        "Zswap is used when disk space is at least 5x your RAM.\n"
+        "Otherwise, Zram is used to save disk space.\n\n"
+        "In Auto mode, all parameters are optimized automatically\n"
+        "and advanced settings are hidden."
     ),
     # Zswap options
-    "zswap_toggle": _(
-        "Compresses inactive memory before writing to disk. "
-        "Reduces disk wear and improves performance."
-    ),
     "zswap_compressor": _(
-        "LZ4: Faster compression, uses more disk space.\n"
-        "ZSTD: Better compression, uses less disk space."
+        "Zstd: Better compression ratio, stores more data in less RAM.\n"
+        "Recommended for most systems — modern CPUs handle it efficiently.\n\n"
+        "LZ4: Faster but lower compression. Only useful if CPU is very slow."
     ),
     "zswap_pool": _(
-        "How much RAM to use for compressed cache. "
-        "Higher values = less disk writes but less free RAM."
-    ),
-    "zswap_shrinker": _(
-        "Automatically releases compressed memory when system needs more RAM. "
-        "Helps prevent out-of-memory situations."
-    ),
-    "zswap_accept_threshold": _(
-        "Only compress pages that achieve this compression ratio or better. "
-        "Higher values = only well-compressing data is cached."
+        "Maximum percentage of RAM reserved for the zswap compressed cache.\n"
+        "Higher = more data cached in RAM before writing to disk.\n"
+        "Lower = more free RAM for applications.\n\n"
+        "Recommended: 25-50% depending on workload."
     ),
     # Zram options
-    "zram_toggle": _(
-        "Creates a compressed virtual disk in RAM. "
-        "Stores more data without using physical disk."
-    ),
     "zram_size": _(
-        "Size of compressed RAM disk. Higher values allow storing more compressed data."
+        "Virtual (uncompressed) size of the zram block device.\n"
+        "With compression, actual RAM usage is much less.\n"
+        "Example: 80% with 3:1 compression uses ~27% of real RAM.\n\n"
+        "Higher values allow storing more compressed data."
     ),
     "zram_algorithm": _(
-        "LZ4: Fast but less compression.\nZSTD: Slower but better compression."
+        "Zstd: Better compression ratio, saves more memory.\n"
+        "Recommended for all systems — modern CPUs handle it well.\n\n"
+        "LZ4: Faster but compresses less. May waste RAM."
     ),
     "zram_mem_limit": _(
-        "Maximum actual RAM that zram can use. "
-        "Prevents zram from consuming too much memory."
+        "Maximum real RAM that zram can consume.\n"
+        "Acts as a safety net against OOM (Out of Memory).\n"
+        "If incompressible data fills zram, this prevents system freezes.\n\n"
+        "Recommended: 60-75% of total RAM."
     ),
-    "zram_priority": _(
-        "Sets the priority for using zram vs other swap. "
-        "Higher priority = zram is used first before disk swap."
+    "zram_recompress": _(
+        "Recompress idle/huge pages with a secondary algorithm.\n"
+        "Pages compressed with the fast primary algorithm get recompressed\n"
+        "when idle, using a stronger algorithm for better ratio.\n\n"
+        "Requires kernel 6.1+ with CONFIG_ZRAM_MULTI_COMP.\n"
+        "Saves RAM at the cost of background CPU usage."
     ),
-    "zram_writeback": _(
-        "Allows zram to write incompressible data to disk. "
-        "Saves RAM for data that compresses well."
+    "zram_recompress_alg": _(
+        "Secondary algorithm used for recompressing idle pages.\n"
+        "Should provide better compression than the primary algorithm.\n\n"
+        "Zstd: Best compression ratio (recommended).\n"
+        "Deflate: Good ratio, widely supported.\n"
+        "LZ4HC: Faster but less compression gain."
     ),
     # Swapfile options
-    "swapfile_toggle": _(
-        "Creates swap files on disk when RAM is full. "
-        "Files grow and shrink automatically as needed."
+    "swapfile_enabled": _(
+        "Creates swap files on disk when RAM is full.\n"
+        "Files grow and shrink automatically as needed.\n"
+        "Uses progressive scaling: starts small, doubles as demand increases.\n\n"
+        "Requires a supported filesystem (btrfs, ext4, or xfs)."
     ),
     "swapfile_chunk": _(
-        "Initial size when creating new swap files. "
-        "Smaller = less disk space, Larger = fewer files."
-    ),
-    "swapfile_max_chunk": _(
-        "Maximum size each swap file can grow to. "
-        "Limits how much disk space a single file can use."
-    ),
-    "swapfile_max_count": _(
-        "Maximum number of swap files to create. "
-        "More files = more available swap space."
-    ),
-    "swapfile_scaling": _(
-        "How quickly swap files grow when more space is needed. "
-        "Higher values = faster growth but more disk usage."
-    ),
-    "swapfile_path": _(
-        "Folder where swap files are stored. "
-        "Choose a location on your fastest disk for best performance."
+        "Base size for each new swap file.\n"
+        "With progressive scaling, this is the starting size.\n"
+        "Files 1-4: base size, Files 5-8: 2x, Files 9-12: 4x, etc.\n\n"
+        "512MB: Good for most systems.\n"
+        "1GB: Better for systems with 8GB+ RAM."
     ),
     # MGLRU options
-    "mglru_toggle": _(
-        "Protects active programs from being swapped out. "
-        "Prevents system freezes when memory is low."
-    ),
     "mglru_ttl": _(
-        "How long to keep memory before allowing swap. "
-        "Lower values = more aggressive swap, Higher = more protection."
+        "Multi-Gen LRU minimum time-to-live for memory pages.\n"
+        "Prevents the kernel from swapping out recently used data.\n"
+        "Higher values = more protection against UI stuttering.\n\n"
+        "Auto adjusts based on RAM: less RAM = more protection."
+    ),
+    # Live Statistics — RAM
+    "stats_ram_total": _(
+        "Total physical memory (RAM) installed in the system.\n"
+        "This is the hardware limit — applications and OS share this pool."
+    ),
+    "stats_ram_used": _(
+        "Memory currently in use by applications and the system.\n"
+        "Includes active processes, libraries, and kernel allocations."
+    ),
+    "stats_ram_available": _(
+        "Memory available for new allocations.\n"
+        "Includes free RAM plus reclaimable file cache and buffers.\n"
+        "This is the practical indicator of how much RAM is free."
+    ),
+    "stats_ram_buffers": _(
+        "Memory used for disk buffers and file cache.\n"
+        "The kernel reclaims this automatically when applications need RAM.\n"
+        "High values here are normal and indicate efficient disk caching."
+    ),
+    # Live Statistics — Swap overview
+    "stats_swap_total": _(
+        "Total swap space available across all backends.\n"
+        "Combines zram (compressed in RAM), zswap, and disk swap files."
+    ),
+    "stats_swap_in_ram": _(
+        "Swap data stored in compressed RAM (zswap pool or zram).\n"
+        "Faster than disk swap — data is compressed and kept in memory."
+    ),
+    "stats_swap_on_disk": _(
+        "Swap data written to disk (swap files or partitions).\n"
+        "Slower than in-RAM swap. Used when compressed cache is full."
+    ),
+    # Live Statistics — Zswap
+    "stats_zswap_pool": _(
+        "RAM used by the zswap compressed cache pool.\n"
+        "Zswap intercepts pages being swapped out and compresses them in RAM\n"
+        "before they reach the disk, reducing I/O significantly."
+    ),
+    "stats_zswap_stored": _(
+        "Original (uncompressed) size of data stored in zswap.\n"
+        "Compare with Pool size to see how much RAM compression saves."
+    ),
+    "stats_zswap_ratio": _(
+        "Compression ratio of zswap data.\n"
+        "Higher = more data fits in less RAM. Typical zstd ratio: 2-4x.\n"
+        "Example: 3.0x means 3 GB of data fits in ~1 GB of RAM."
+    ),
+    # Live Statistics — Zram
+    "stats_zram_capacity": _(
+        "Virtual (uncompressed) size of the zram block device.\n"
+        "This is the maximum amount of data zram can hold before compression.\n"
+        "Actual RAM usage depends on the compression ratio."
+    ),
+    "stats_zram_used": _(
+        "Data currently stored in zram, compressed in RAM.\n"
+        "With zstd compression, actual RAM usage is typically 30-50% of this."
+    ),
+    "stats_zram_ratio": _(
+        "Compression ratio of zram data.\n"
+        "Formula: original data size / compressed size.\n"
+        "Higher = better compression. Typical zstd ratio: 2-4x."
+    ),
+    # Live Statistics — Swap files
+    "stats_swapfiles": _(
+        "Number of dynamic swap files and their total usage.\n"
+        "Files are created and removed automatically as demand changes."
+    ),
+    "stats_copy": _(
+        "Copy all current statistics to the clipboard.\n"
+        "Useful for sharing diagnostics or reporting issues."
     ),
     # Status indicators
     "status_service": _(
-        "Shows if the swap management service is running. "
-        "Green = active and working, Red = stopped or error."
+        "Shows if the swap management service is running.\n"
+        "Green = active and managing swap automatically.\n"
+        "Gray = stopped or not installed."
     ),
     "status_mode": _(
-        "Shows the current swap mode being used. "
-        "This reflects the active configuration."
+        "The current swap mode in use.\n"
+        "In Auto mode, the system detects the optimal configuration."
     ),
+    # HeaderBar
+    "header_about": _("View application information and version."),
+    "header_menu": _("Access main menu, restore defaults, and quit."),
+    "header_apply": _("Apply current configuration changes to the system."),
 }
 
 
-# =============================================================================
-# Tooltip Helper
-# =============================================================================
-
-
 class TooltipHelper:
-    """Manages tooltips for GTK4 widgets."""
+    """
+    Manages custom tooltips using Widget-Anchored Gtk.Popover.
 
-    def __init__(self):
-        self.active_widget = None
-        self.show_timer_id = None
-        self._use_native_tooltips = _is_x11_backend()
-        self._color_css_provider = None
+    Adapted from big-audio-converter's portable TooltipHelper.
+    Uses CSS-styled popovers with fade animation instead of native tooltips,
+    providing a more consistent and visually appealing experience.
+    """
 
-        if self._use_native_tooltips:
-            self.popover = None
-            self.label = None
-            self.css_provider = None
-            return
+    def __init__(self) -> None:
+        self.active_popover: Gtk.Popover | None = None
+        self.active_widget: Gtk.Widget | None = None
+        self.show_timer_id: int | None = None
+        self.hide_timer_id: int | None = None
+        self.closing_popover: Gtk.Popover | None = None
+        self._color_css_provider: Gtk.CssProvider | None = None
+        self._colors_initialized: bool = False
+        self._tracked_windows: set[Gtk.Window] = set()
+        self._widgets_with_tooltips: set[Gtk.Widget] = set()
 
-        self.popover = Gtk.Popover()
-        self.popover.set_autohide(False)
-        self.popover.set_has_arrow(False)
-        self.popover.set_position(Gtk.PositionType.TOP)
-        self.popover.set_offset(0, -12)
+        # Connect to Adwaita style manager for automatic theme updates
+        with contextlib.suppress(Exception):
+            style_manager = Adw.StyleManager.get_default()
+            style_manager.connect("notify::dark", self._on_theme_changed)
+            style_manager.connect("notify::color-scheme", self._on_theme_changed)
 
-        self.label = Gtk.Label(
-            wrap=True,
-            max_width_chars=50,
-            margin_start=12,
-            margin_end=12,
-            margin_top=8,
-            margin_bottom=8,
-            halign=Gtk.Align.START,
-        )
-        self.popover.set_child(self.label)
+    def _on_theme_changed(
+        self, _style_manager: Adw.StyleManager, _pspec: object
+    ) -> None:
+        GLib.idle_add(self._apply_default_colors)
 
-        self.css_provider = Gtk.CssProvider()
-        css = b"""
-        .tooltip-popover { opacity: 0; transition: opacity 250ms ease-in-out; }
-        .tooltip-popover.visible { opacity: 1; }
-        """
-        self.css_provider.load_from_data(css)
-        self.popover.add_css_class("tooltip-popover")
-
-        Gtk.StyleContext.add_provider_for_display(
-            Gdk.Display.get_default(),
-            self.css_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-
-        self.popover.connect("map", self._on_popover_map)
-        GLib.idle_add(self.update_colors)
-
-    def _on_popover_map(self, _popover):
-        if self.popover:
-            self.popover.add_css_class("visible")
-
-    def add_tooltip(self, widget, tooltip_key: str) -> None:
-        """Add tooltip to a widget."""
-        tooltip_text = TOOLTIPS.get(tooltip_key, "")
-
-        if self._use_native_tooltips:
-            if tooltip_text:
-                widget.set_tooltip_text(tooltip_text)
-            return
-
-        widget.tooltip_key = tooltip_key
-        motion_controller = Gtk.EventControllerMotion.new()
-        motion_controller.connect("enter", self._on_enter, widget)
-        motion_controller.connect("leave", self._on_leave)
-        widget.add_controller(motion_controller)
-
-    def _clear_timer(self):
-        if self.show_timer_id:
-            # Check if source still exists before trying to remove
-            context = GLib.MainContext.default()
-            source = context.find_source_by_id(self.show_timer_id)
-            if source is not None:
-                GLib.source_remove(self.show_timer_id)
-            self.show_timer_id = None
-
-    def _on_enter(self, _controller, _x, _y, widget):
-        if self.active_widget == widget:
-            return
-        self._clear_timer()
-        self._hide_tooltip()
-        self.active_widget = widget
-        self.show_timer_id = GLib.timeout_add(250, self._show_tooltip)
-
-    def _on_leave(self, _controller):
-        self._clear_timer()
-        if self.active_widget:
-            self._hide_tooltip(animate=True)
-            self.active_widget = None
-
-    def _show_tooltip(self):
-        if not self.active_widget or not self.popover:
-            return GLib.SOURCE_REMOVE
-
-        try:
-            if not self.active_widget.get_mapped():
-                return GLib.SOURCE_REMOVE
-            if self.active_widget.get_native() is None:
-                return GLib.SOURCE_REMOVE
-        except Exception:
-            return GLib.SOURCE_REMOVE
-
-        tooltip_key = getattr(self.active_widget, "tooltip_key", None)
-        tooltip_text = TOOLTIPS.get(tooltip_key) if tooltip_key else None
-        if not tooltip_text:
-            return GLib.SOURCE_REMOVE
-
-        try:
-            self.label.set_text(tooltip_text)
-            if self.popover.get_parent() is not None:
-                self.popover.unparent()
-            self.popover.remove_css_class("visible")
-            self.popover.set_parent(self.active_widget)
-            self.popover.popup()
-        except Exception:
-            pass
-
-        self.show_timer_id = None
-        return GLib.SOURCE_REMOVE
-
-    def _hide_tooltip(self, animate=False):
-        if not self.popover or not self.popover.is_visible():
-            return
-
-        def do_cleanup():
-            try:
-                if self.popover:
-                    self.popover.popdown()
-                    if self.popover.get_parent():
-                        self.popover.unparent()
-            except Exception:
-                pass
-            return GLib.SOURCE_REMOVE
-
-        self.popover.remove_css_class("visible")
-        if animate:
-            GLib.timeout_add(200, do_cleanup)
-        else:
-            do_cleanup()
-
-    def update_colors(self):
-        if self._use_native_tooltips:
-            return
-
+    def _apply_default_colors(self) -> int:
         try:
             style_manager = Adw.StyleManager.get_default()
             is_dark = style_manager.get_dark()
-            if is_dark:
-                bg, fg, border = "#3a3a3a", "#ffffff", "#707070"
-            else:
-                bg, fg, border = "#fafafa", "#2e2e2e", "#a0a0a0"
+            bg_color = "#1a1a1a" if is_dark else "#fafafa"
+            fg_color = "#ffffff" if is_dark else "#2e2e2e"
         except Exception:
-            bg, fg, border = "#3a3a3a", "#ffffff", "#707070"
+            bg_color = "#2a2a2a"
+            fg_color = "#ffffff"
+        self._apply_css(bg_color, fg_color)
+        return GLib.SOURCE_REMOVE
+
+    def _ensure_colors_initialized(self) -> None:
+        if not self._colors_initialized:
+            self._apply_default_colors()
+            self._colors_initialized = True
+
+    def _apply_css(self, bg_color: str, fg_color: str) -> None:
+        luminance = self._luminance(bg_color)
+        is_dark = luminance < 0.5
+        tooltip_bg = self._adjust_bg(bg_color)
+        border_color = "#707070" if is_dark else "#a0a0a0"
 
         css = f"""
-        popover.tooltip-popover > contents {{
-            background-color: {bg}; color: {fg};
-            border: 1px solid {border}; border-radius: 8px;
-        }}
-        popover.tooltip-popover label {{ color: {fg}; }}
-        """
-
+popover.custom-tooltip-static {{
+    background: transparent;
+    box-shadow: none;
+    padding: 12px;
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}}
+popover.custom-tooltip-static.visible {{
+    opacity: 1;
+}}
+popover.custom-tooltip-static > contents {{
+    background-color: {tooltip_bg};
+    color: {fg_color};
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid {border_color};
+}}
+popover.custom-tooltip-static label {{
+    color: {fg_color};
+}}
+"""
         display = Gdk.Display.get_default()
         if not display:
             return
@@ -493,11 +431,231 @@ class TooltipHelper:
             )
             self._color_css_provider = provider
 
-    def cleanup(self):
+    @staticmethod
+    def _luminance(color: str) -> float:
+        try:
+            h = color.lstrip("#")
+            r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+            return (0.299 * r + 0.587 * g + 0.114 * b) / 255
+        except Exception:
+            return 0.5
+
+    @staticmethod
+    def _adjust_bg(bg_color: str) -> str:
+        try:
+            h = bg_color.lstrip("#")
+            r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+            lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+            adj = 40 if lum < 0.5 else -20
+            r = max(0, min(255, r + adj))
+            g = max(0, min(255, g + adj))
+            b = max(0, min(255, b + adj))
+            return f"#{r:02x}{g:02x}{b:02x}"
+        except Exception:
+            return bg_color
+
+    def add_tooltip(self, widget: Gtk.Widget, tooltip_key: str) -> None:
+        """Add a custom popover tooltip to a widget."""
+        tooltip_text = TOOLTIPS.get(tooltip_key, "")
+        if not tooltip_text:
+            return
+
+        widget._custom_tooltip_text = tooltip_text  # type: ignore[attr-defined]
+        widget.set_tooltip_text(None)  # Disable native tooltip
+        self._add_controller(widget)
+        self._widgets_with_tooltips.add(widget)
+        self._setup_window_focus_tracking(widget)
+
+    def _setup_window_focus_tracking(self, widget: Gtk.Widget) -> None:
+        def on_realize(w: Gtk.Widget) -> None:
+            root = w.get_root()
+            if (
+                root
+                and isinstance(root, Gtk.Window)
+                and root not in self._tracked_windows
+            ):
+                self._tracked_windows.add(root)
+                root.connect("notify::is-active", self._on_window_active_changed)
+                root.connect("notify::maximized", self._on_window_state_changed)
+                root.connect("notify::fullscreened", self._on_window_state_changed)
+
+        if widget.get_realized():
+            on_realize(widget)
+        else:
+            widget.connect("realize", on_realize)
+
+    def _on_window_state_changed(self, _window: Gtk.Window, _pspec: object) -> None:
         self._clear_timer()
-        if self.popover and self.popover.get_parent():
+        self.hide(immediate=True)
+        self.active_widget = None
+        self._popdown_all_cached()
+
+    def _on_window_active_changed(self, window: Gtk.Window, _pspec: object) -> None:
+        if not window.get_property("is-active"):
+            self._clear_timer()
+            self.hide(immediate=True)
+            self.active_widget = None
+            self._popdown_all_cached()
+
+    def _add_controller(self, widget: Gtk.Widget) -> None:
+        if getattr(widget, "_has_custom_tooltip_controller", False):
+            return
+
+        motion = Gtk.EventControllerMotion.new()
+        motion.connect("enter", self._on_enter, widget)
+        motion.connect("leave", self._on_leave)
+        widget.add_controller(motion)
+
+        click = Gtk.GestureClick.new()
+        click.connect("pressed", self._on_click)
+        widget.add_controller(click)
+
+        widget._has_custom_tooltip_controller = True  # type: ignore[attr-defined]
+
+    def _on_click(self, *_args: object) -> None:
+        self._clear_timer()
+        self.hide(immediate=True)
+        self.active_widget = None
+
+    def _clear_timer(self) -> None:
+        if self.show_timer_id:
+            GLib.source_remove(self.show_timer_id)
+            self.show_timer_id = None
+        if self.hide_timer_id:
+            GLib.source_remove(self.hide_timer_id)
+            self.hide_timer_id = None
+        if self.closing_popover:
             with contextlib.suppress(Exception):
-                self.popover.unparent()
+                self.closing_popover.popdown()
+                self.closing_popover.remove_css_class("visible")
+            self.closing_popover = None
+
+    def _on_enter(
+        self, _ctrl: Gtk.EventControllerMotion, _x: float, _y: float, widget: Gtk.Widget
+    ) -> None:
+        if self.active_widget and self.active_widget != widget:
+            self.hide(immediate=True)
+        self._clear_timer()
+        self.active_widget = widget
+        self.show_timer_id = GLib.timeout_add(150, self._show_tooltip_impl)
+
+    def _on_leave(self, ctrl: Gtk.EventControllerMotion) -> None:
+        widget = ctrl.get_widget()
+        if self.active_widget == widget:
+            self._clear_timer()
+            self.hide()
+            self.active_widget = None
+
+    def _get_widget_popover(self, widget: Gtk.Widget) -> tuple[Gtk.Popover, Gtk.Label]:
+        if not hasattr(widget, "_custom_tooltip_popover"):
+            popover = Gtk.Popover()
+            popover.set_has_arrow(False)
+            popover.set_position(Gtk.PositionType.TOP)
+            popover.set_can_target(False)
+            popover.set_focusable(False)
+            popover.set_autohide(False)
+            popover.add_css_class("custom-tooltip-static")
+
+            label = Gtk.Label(wrap=True, max_width_chars=45)
+            label.set_halign(Gtk.Align.CENTER)
+            popover.set_child(label)
+            popover.set_parent(widget)
+
+            widget._custom_tooltip_popover = (popover, label)  # type: ignore[attr-defined]
+        return widget._custom_tooltip_popover  # type: ignore[attr-defined]
+
+    def _show_tooltip_impl(self) -> bool:
+        self.show_timer_id = None
+        if not self.active_widget:
+            return GLib.SOURCE_REMOVE
+
+        self._ensure_colors_initialized()
+
+        text = getattr(self.active_widget, "_custom_tooltip_text", None)
+        if not text or not self.active_widget.get_mapped():
+            return GLib.SOURCE_REMOVE
+
+        root = self.active_widget.get_root()
+        if root and isinstance(root, Gtk.Window) and not root.is_active():
+            return GLib.SOURCE_REMOVE
+
+        try:
+            popover, label = self._get_widget_popover(self.active_widget)
+            label.set_text(text)
+
+            alloc = self.active_widget.get_allocation()
+            rect = Gdk.Rectangle()
+            rect.x = 0
+            rect.y = 0
+            rect.width = alloc.width
+            rect.height = alloc.height
+            popover.set_pointing_to(rect)
+            popover.popup()
+            popover.set_visible(True)
+            popover.add_css_class("visible")
+            self.active_popover = popover
+        except Exception:
+            logger.exception("Error showing tooltip")
+
+        return GLib.SOURCE_REMOVE
+
+    def hide(self, immediate: bool = False) -> None:
+        if not self.active_popover:
+            return
+
+        popover_to_hide = self.active_popover
+        self.active_popover = None
+        self.closing_popover = popover_to_hide
+
+        with contextlib.suppress(Exception):
+            popover_to_hide.remove_css_class("visible")
+
+        if immediate:
+            with contextlib.suppress(Exception):
+                popover_to_hide.popdown()
+            self.closing_popover = None
+        else:
+
+            def do_popdown() -> bool:
+                with contextlib.suppress(Exception):
+                    popover_to_hide.popdown()
+                self.hide_timer_id = None
+                self.closing_popover = None
+                return GLib.SOURCE_REMOVE
+
+            if self.hide_timer_id:
+                GLib.source_remove(self.hide_timer_id)
+            self.hide_timer_id = GLib.timeout_add(300, do_popdown)
+
+    def _popdown_all_cached(self) -> None:
+        """Force popdown all cached tooltip popovers on every tracked widget."""
+        for widget in list(self._widgets_with_tooltips):
+            with contextlib.suppress(Exception):
+                if hasattr(widget, "_custom_tooltip_popover"):
+                    popover, _ = widget._custom_tooltip_popover
+                    popover.popdown()
+
+    def hide_all(self) -> None:
+        """Hide all tooltips from all tracked widgets immediately.
+
+        Useful when opening dialogs or switching focus.
+        """
+        self._clear_timer()
+        self.hide(immediate=True)
+        self.active_widget = None
+        self._popdown_all_cached()
+
+    def cleanup(self) -> None:
+        """Cleanup all tooltips on shutdown."""
+        self._clear_timer()
+        self.hide(immediate=True)
+        for widget in list(self._widgets_with_tooltips):
+            data = getattr(widget, "_custom_tooltip_popover", None)
+            if data:
+                popover, _ = data
+                popover.popdown()
+                popover.unparent()
+        self._widgets_with_tooltips.clear()
 
 
 # =============================================================================

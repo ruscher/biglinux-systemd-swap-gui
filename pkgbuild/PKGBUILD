@@ -12,6 +12,7 @@ depends=(
 	'python-gobject'
 )
 makedepends=(
+	'gettext'
 	'python-build'
 	'python-installer'
 	'python-uv-build'
@@ -37,8 +38,15 @@ package() {
 
 	python -m installer --destdir="$pkgdir" dist/*.whl
 
-	# Install share files (desktop, icons, polkit)
+	# Install share files (desktop, icons)
 	cp -a usr/share "${pkgdir}/usr/share"
+
+	# Compile and install locale files (.po → .mo)
+	for po in locale/*.po; do
+		lang=$(basename "$po" .po)
+		install -d "${pkgdir}/usr/share/locale/$lang/LC_MESSAGES"
+		msgfmt -o "${pkgdir}/usr/share/locale/$lang/LC_MESSAGES/biglinux-swap.mo" "$po"
+	done
 
 	# Install executable wrapper
 	install -Dm755 usr/bin/biglinux-swap "${pkgdir}/usr/bin/biglinux-swap"

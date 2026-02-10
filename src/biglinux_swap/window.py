@@ -8,20 +8,23 @@ Adwaita ApplicationWindow with single unified view.
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Gtk", "4.0")
 gi.require_version("Adw", "1")
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, Gtk
 
 from biglinux_swap.config import APP_NAME, SwapConfig, SwapMode
+from biglinux_swap.i18n import _
 from biglinux_swap.ui.unified_view import UnifiedView
 from biglinux_swap.utils import (
     apply_config_with_pkexec,
     enable_systemd_swap,
     stop_systemd_swap,
+    TooltipHelper,
 )
 
 if TYPE_CHECKING:
@@ -62,8 +65,10 @@ class SwapWindow(Adw.ApplicationWindow):
         self._meminfo_service = meminfo_service
         self._swap_service = swap_service
 
-        # View reference
         self._unified_view: UnifiedView | None = None
+        self._tooltip_helper: TooltipHelper | None = None
+
+        self.connect("close-request", self._on_close_request)
 
         self._setup_window()
         self._setup_ui()
@@ -71,6 +76,7 @@ class SwapWindow(Adw.ApplicationWindow):
     def _setup_window(self) -> None:
         """Configure window properties."""
         self.set_title(APP_NAME)
+        self.set_icon_name("biglinux-swap")
         self.set_default_size(800, 800)
         self.set_size_request(450, 600)
 
@@ -85,28 +91,64 @@ class SwapWindow(Adw.ApplicationWindow):
         # Header bar
         self._header = Adw.HeaderBar()
 
-        # Apply button on the left (opposite side of window controls)
-        self._apply_btn = Gtk.Button()
-        self._apply_btn.set_label("Apply")
-        self._apply_btn.add_css_class("suggested-action")
-        self._apply_btn.set_tooltip_text("Apply configuration changes")
-        self._apply_btn.connect("clicked", self._on_apply_clicked)
-        self._apply_btn.set_sensitive(False)  # Disabled until changes are made
-        self._header.pack_start(self._apply_btn)
+        # App icon button on the left (start side)
+        # App icon button on the left (start side)
+        icon_btn = Gtk.Button()
 
-        # Menu button
+        # Try to load SVG directly for best quality
+        project_root = Path(__file__).resolve().parent.parent.parent
+        icon_path = (
+            project_root
+            / "usr"
+            / "share"
+            / "icons"
+            / "hicolor"
+            / "scalable"
+            / "apps"
+            / "biglinux-swap.svg"
+        )
+
+        if icon_path.exists():
+            _icon_img = Gtk.Picture.new_for_filename(str(icon_path))
+            _icon_img.set_can_shrink(False)
+            _icon_img.set_content_fit(Gtk.ContentFit.CONTAIN)
+            _icon_img.set_size_request(24, 24)
+        else:
+            _icon_img = Gtk.Image.new_from_icon_name("biglinux-swap")
+            _icon_img.set_pixel_size(24)
+
+        icon_btn.set_child(_icon_img)
+        icon_btn.add_css_class("flat")
+        self._tooltip_helper = TooltipHelper()
+        self._tooltip_helper.add_tooltip(icon_btn, "header_about")
+        icon_btn.connect(
+            "clicked", lambda _b: self.get_application().activate_action("about", None)
+        )
+        self._header.pack_start(icon_btn)
+
+        # Menu button on the right (end side)
         menu_btn = Gtk.MenuButton()
         menu_btn.set_icon_name("open-menu-symbolic")
-        menu_btn.set_tooltip_text("Menu")
+        self._tooltip_helper.add_tooltip(menu_btn, "header_menu")
 
         # Build menu
         menu = Gio.Menu()
-        menu.append("Restore Defaults", "app.restore_defaults")
-        menu.append("Refresh", "app.refresh")
+        menu.append(_("Welcome"), "app.welcome")
+        menu.append(_("Restore Defaults"), "app.restore_defaults")
         menu.append_section(None, self._create_about_section())
         menu_btn.set_menu_model(menu)
 
         self._header.pack_end(menu_btn)
+
+        # Apply button next to menu (end side)
+        self._apply_btn = Gtk.Button()
+        self._apply_btn.set_label(_("Apply"))
+        self._apply_btn.add_css_class("suggested-action")
+        self._tooltip_helper.add_tooltip(self._apply_btn, "header_apply")
+        self._apply_btn.connect("clicked", self._on_apply_clicked)
+        self._apply_btn.set_sensitive(False)  # Disabled until changes are made
+        self._header.pack_end(self._apply_btn)
+
         main_box.append(self._header)
 
         # Unified view (status + settings in one page)
@@ -149,7 +191,7 @@ class SwapWindow(Adw.ApplicationWindow):
             body: Dialog body message
         """
         dialog = Adw.MessageDialog.new(self, title, body)
-        dialog.add_response("ok", "OK")
+        dialog.add_response("ok", _("OK"))
         dialog.set_default_response("ok")
         dialog.set_close_response("ok")
         dialog.present()
@@ -168,90 +210,92 @@ class SwapWindow(Adw.ApplicationWindow):
         # Check if any swap (files, zram, partitions) has data in use
         swap_in_use = self._swap_service.has_any_swap_in_use()
 
+        # Disable apply button during operation
+        if self._apply_btn:
+            self._apply_btn.set_sensitive(False)
+
         # Handle DISABLED mode
         if config.mode == SwapMode.DISABLED:
             if swap_in_use:
+                if self._apply_btn:
+                    self._apply_btn.set_sensitive(True)
                 self._show_success_dialog(
-                    "Restart Required",
-                    "There is data in swap.\n\n"
-                    "For safety, please restart your computer to disable swap.\n"
-                    "This prevents system freezes from disabling active swap.",
+                    _("Restart Required"),
+                    _(
+                        "There is data in swap.\n\n"
+                        "For safety, please restart your computer to disable swap.\n"
+                        "This prevents system freezes from disabling active swap."
+                    ),
                 )
                 return
 
-            self._show_toast("Stopping swap service...")
+            self._show_toast(_("Stopping swap service..."))
 
             def on_stop_complete(success: bool, message: str) -> bool:
+                if self._apply_btn:
+                    self._apply_btn.set_sensitive(True)
                 if success:
-                    self._show_toast("Swap management disabled")
+                    self._show_toast(_("Swap management disabled"))
                     self._config_service.load()
                     if self._unified_view:
                         self._unified_view.mark_saved()
                 else:
-                    self._show_toast(f"Failed: {message}", 5)
+                    self._show_toast(_("Failed: {}").format(message), 5)
                 return False
 
-            def stop_async() -> bool:
-                success, message = stop_systemd_swap()
-                GLib.idle_add(on_stop_complete, success, message)
-                return False
-
-            GLib.timeout_add(100, stop_async)
+            stop_systemd_swap(on_complete=on_stop_complete)
             return
 
         # Generate config content
         content = self._config_service.generate_config_content(config)
 
         # Show applying indicator
-        self._show_toast("Applying configuration...")
+        self._show_toast(_("Applying configuration..."))
 
-        # Apply with pkexec in background
-        def on_complete(success: bool, needs_restart: bool) -> bool:
-            if success:
-                self._config_service.load()
-                # Mark as saved to disable Apply button
-                if self._unified_view:
-                    self._unified_view.mark_saved()
-
-                if needs_restart:
-                    # Swap in use - only config saved, needs restart
-                    self._show_success_dialog(
-                        "Restart Required",
-                        "Configuration saved successfully.\n\n"
-                        "There is data in swap. For safety, please restart\n"
-                        "your computer to apply the changes without risk of freezes.",
-                    )
-                else:
-                    # No swap in use - service restarted immediately
-                    self._show_success_dialog(
-                        "Configuration Applied",
-                        "Configuration applied and service restarted successfully.",
-                    )
-            return False
-
-        def apply_async() -> bool:
-            success, message = apply_config_with_pkexec(content)
+        def on_apply_complete(success: bool, message: str) -> bool:
             if not success:
-                GLib.idle_add(lambda: self._show_toast(f"Failed: {message}", 5))
+                if self._apply_btn:
+                    self._apply_btn.set_sensitive(True)
+                self._show_toast(_("Failed: {}").format(message), 5)
                 return False
+
+            self._config_service.load()
+            if self._unified_view:
+                self._unified_view.mark_saved()
 
             # If any swap is in use, don't restart service
             if swap_in_use:
-                GLib.idle_add(on_complete, True, True)
-                return False
-
-            # No swap in use - restart service to apply immediately
-            success2, message2 = enable_systemd_swap()
-            if not success2:
-                GLib.idle_add(
-                    lambda: self._show_toast(f"Config saved but restart failed: {message2}", 5)
+                if self._apply_btn:
+                    self._apply_btn.set_sensitive(True)
+                self._show_success_dialog(
+                    _("Restart Required"),
+                    _(
+                        "Configuration saved successfully.\n\n"
+                        "There is data in swap. For safety, please restart\n"
+                        "your computer to apply the changes without risk of freezes."
+                    ),
                 )
                 return False
 
-            GLib.idle_add(on_complete, True, False)
+            # No swap in use - enable and restart service
+            def on_enable_complete(success2: bool, message2: str) -> bool:
+                if self._apply_btn:
+                    self._apply_btn.set_sensitive(True)
+                if success2:
+                    self._show_success_dialog(
+                        _("Configuration Applied"),
+                        _("Configuration applied and service restarted successfully."),
+                    )
+                else:
+                    self._show_toast(
+                        _("Config saved but restart failed: {}").format(message2), 5
+                    )
+                return False
+
+            enable_systemd_swap(on_complete=on_enable_complete)
             return False
 
-        GLib.timeout_add(100, apply_async)
+        apply_config_with_pkexec(content, on_complete=on_apply_complete)
 
     def apply_config(self) -> None:
         """Apply current view configuration."""
@@ -264,13 +308,13 @@ class SwapWindow(Adw.ApplicationWindow):
         self._config_service.load()
         if self._unified_view:
             self._unified_view._update_swap_status()
-        self._show_toast("Refreshed", 1)
+        self._show_toast(_("Refreshed"), 1)
 
     def restore_defaults(self) -> None:
         """Restore default settings."""
         if self._unified_view:
             self._unified_view.restore_defaults()
-            self._show_toast("Settings restored to defaults")
+            self._show_toast(_("Settings restored to defaults"))
 
     def _on_apply_clicked(self, _button: Gtk.Button) -> None:
         """Handle Apply button click from headerbar."""
@@ -279,6 +323,14 @@ class SwapWindow(Adw.ApplicationWindow):
     def _create_about_section(self) -> Gio.Menu:
         """Create the about section for the menu."""
         section = Gio.Menu()
-        section.append("About", "app.about")
-        section.append("Quit", "app.quit")
+        section.append(_("About"), "app.about")
+        section.append(_("Quit"), "app.quit")
         return section
+
+    def _on_close_request(self, _window: Adw.ApplicationWindow) -> bool:
+        """Handle window close request by cleaning up resources."""
+        if self._unified_view:
+            self._unified_view.cleanup()
+        if self._tooltip_helper:
+            self._tooltip_helper.cleanup()
+        return False  # Propagate close request
