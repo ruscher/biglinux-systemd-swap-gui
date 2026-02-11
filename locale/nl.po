@@ -2,190 +2,932 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-systemd-swap-gui package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-systemd-swap-gui\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: Dutch <http://www.transifex.com/biglinux/biglinux-systemd-swap-gui/language/nl/>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: attranslate\n"
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 196
+"X-Generator: BigLinux Translator\n"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 181
 msgid ""
-"Let the system choose the best settings based on your hardware. Zswap is used when disk space is at "
-"least 5x your RAM size. Otherwise, Zram is used to save disk space."
+"Auto: Detects the best settings based on your hardware.\n"
+"Zswap is used when disk space is at least 5x your RAM.\n"
+"Otherwise, Zram is used to save disk space.\n"
+"\n"
+"In Auto mode, all parameters are optimized automatically\n"
+"and advanced settings are hidden."
 msgstr ""
-"Laat het systeem de beste instellingen kiezen op basis van uw hardware. Zswap wordt gebruikt "
-"wanneer de schijfruimte ten minste 5x uw RAM-grootte is. Anders wordt Zram gebruikt om schijfruimte "
-"te besparen."
-# 
+"Auto: Detecteert de beste instellingen op basis van uw hardware.\n"
+"Zswap wordt gebruikt wanneer de schijfruimte ten minste 5x uw RAM is.\n"
+"Anders wordt Zram gebruikt om schijfruimte te besparen.\n"
+"\n"
+"In de Auto-modus worden alle parameters automatisch geoptimaliseerd\n"
+"en zijn geavanceerde instellingen verborgen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 189
+msgid ""
+"Zstd: Better compression ratio, stores more data in less RAM.\n"
+"Recommended for most systems — modern CPUs handle it efficiently.\n"
+"\n"
+"LZ4: Faster but lower compression. Only useful if CPU is very slow."
+msgstr ""
+"Zstd: Betere compressieverhouding, slaat meer gegevens op in minder RAM.\n"
+"Aanbevolen voor de meeste systemen — moderne CPU's verwerken het efficiënt.\n"
+"\n"
+"LZ4: Sneller maar lagere compressie. Alleen nuttig als de CPU erg traag is."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 194
+msgid ""
+"Maximum percentage of RAM reserved for the zswap compressed cache.\n"
+"Higher = more data cached in RAM before writing to disk.\n"
+"Lower = more free RAM for applications.\n"
+"\n"
+"Recommended: 25-50% depending on workload."
+msgstr ""
+"Maximaal percentage RAM gereserveerd voor de zswap-gecomprimeerde cache.\n"
+"Hoger = meer gegevens in RAM gecached voordat ze naar schijf worden geschreven.\n"
+"Lager = meer vrije RAM voor applicaties.\n"
+"\n"
+"Aanbevolen: 25-50% afhankelijk van de werklast."
+
+#
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
 msgid ""
-"Zswap offers better performance but uses more disk space. Best for SSD with plenty of free space "
-"(5x RAM or more). Data is compressed in RAM before writing to disk files."
+"Virtual (uncompressed) size of the zram block device.\n"
+"With compression, actual RAM usage is much less.\n"
+"Example: 80% with 3:1 compression uses ~27% of real RAM.\n"
+"\n"
+"Higher values allow storing more compressed data."
 msgstr ""
-"Zswap biedt betere prestaties, maar gebruikt meer schijfruimte. Het is het beste voor SSD's met "
-"voldoende vrije ruimte (5x RAM of meer). Gegevens worden in RAM gecomprimeerd voordat ze naar "
-"schijfbestanden worden geschreven."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 206
+"Virtuele (niet-gecomprimeerde) grootte van het zram-blokapparaat.\n"
+"Met compressie is het werkelijke RAM-gebruik veel minder.\n"
+"Voorbeeld: 80% met 3:1 compressie gebruikt ~27% van de echte RAM.\n"
+"\n"
+"Hogere waarden maken het opslaan van meer gecomprimeerde gegevens mogelijk."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 207
 msgid ""
-"Zram uses less disk space than Zswap by compressing data in RAM. Best for HDD or systems with "
-"limited disk space. Swap files on disk serve as backup when RAM is full."
+"Zstd: Better compression ratio, saves more memory.\n"
+"Recommended for all systems — modern CPUs handle it well.\n"
+"\n"
+"LZ4: Faster but compresses less. May verspillen RAM."
 msgstr ""
-"Zram gebruikt minder schijfruimte dan Zswap door gegevens in RAM te comprimeren. Het is het beste "
-"voor HDD of systemen met beperkte schijfruimte. Swapbestanden op de schijf dienen als back-up "
-"wanneer het RAM vol is."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 211
+"Zstd: Betere compressieverhouding, bespaart meer geheugen.\n"
+"Aanbevolen voor alle systemen — moderne CPU's verwerken het goed.\n"
+"\n"
+"LZ4: Sneller maar comprimeert minder. Kan RAM verspillen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 212
 msgid ""
-"Uses only compressed RAM, no disk files are created. Best for systems with very limited disk space. "
-"All swap is handled entirely in memory."
+"Maximum real RAM that zram can consume.\n"
+"Acts as a safety net against OOM (Out of Memory).\n"
+"If incompressible data fills zram, this prevents system freezes.\n"
+"\n"
+"Recommended: 60-75% of total RAM."
 msgstr ""
-"Gebruikt alleen gecomprimeerd RAM, er worden geen schijfbestanden aangemaakt. Het beste voor "
-"systemen met zeer beperkte schijfruimte. Alle swap wordt volledig in het geheugen afgehandeld."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 216
+"Maximale echte RAM die zram kan verbruiken.\n"
+"Fungeert als een vangnet tegen OOM (Out of Memory).\n"
+"Als niet-samendrukbare gegevens zram vullen, voorkomt dit systeembevriezingen.\n"
+"\n"
+"Aanbevolen: 60-75% van de totale RAM."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 218
 msgid ""
-"Completely disable swap management. The systemd-swap service will be stopped. Not recommended "
-"unless you manage swap manually."
+"Recompress idle/huge pages with a secondary algorithm.\n"
+"Pages compressed with the fast primary algorithm get recompressed\n"
+"when idle, using a stronger algorithm for better ratio.\n"
+"\n"
+"Requires kernel 6.1+ with CONFIG_ZRAM_MULTI_COMP.\n"
+"Saves RAM at the cost of background CPU usage."
 msgstr ""
-"Schakel het swapbeheer volledig uit. De systemd-swap service wordt gestopt. Niet aanbevolen, tenzij "
-"u swap handmatig beheert."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 222
-msgid "Compresses inactive memory before writing to disk. Reduces disk wear and improves performance."
-msgstr ""
-"Comprimeert inactief geheugen voordat het naar de schijf wordt geschreven. Vermindert slijtage van "
-"de schijf en verbetert de prestaties."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 226
+"Comprimeer inactieve/grote pagina's opnieuw met een secundair algoritme.\n"
+"Pagina's gecomprimeerd met het snelle primaire algoritme worden opnieuw gecomprimeerd\n"
+"wanneer inactief, met een sterker algoritme voor een betere verhouding.\n"
+"\n"
+"Vereist kernel 6.1+ met CONFIG_ZRAM_MULTI_COMP.\n"
+"Bespaart RAM ten koste van achtergrond-CPU-gebruik."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 225
 msgid ""
-"LZ4: Faster compression, uses more disk space.\n"
-"ZSTD: Better compression, uses less disk space."
+"Secondary algorithm used for recompressing idle pages.\n"
+"Should provide better compression than the primary algorithm.\n"
+"\n"
+"Zstd: Best compression ratio (recommended).\n"
+"Deflate: Good ratio, widely supported.\n"
+"LZ4HC: Faster but less compression gain."
 msgstr ""
-"LZ4: Snellere compressie, gebruikt meer schijfruimte.  \n"
-"ZSTD: Betere compressie, gebruikt minder schijfruimte."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 230
-msgid "How much RAM to use for compressed cache. Higher values = less disk writes but less free RAM."
-msgstr ""
-"Hoeveel RAM te gebruiken voor gecomprimeerde cache. Hogere waarden = minder schijfschrijvingen maar "
-"minder vrij RAM."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 234
+"Secundair algoritme gebruikt voor het opnieuw comprimeren van inactieve pagina's.\n"
+"Zou betere compressie moeten bieden dan het primaire algoritme.\n"
+"\n"
+"Zstd: Beste compressieverhouding (aanbevolen).\n"
+"Deflate: Goede verhouding, breed ondersteund.\n"
+"LZ4HC: Sneller maar minder compressiewinst."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 233
 msgid ""
-"Automatically releases compressed memory when system needs more RAM. Helps prevent out-of-memory "
-"situations."
+"Creates swap files on disk when RAM is full.\n"
+"Files grow and shrink automatically as needed.\n"
+"Uses progressive scaling: starts small, doubles as demand increases.\n"
+"\n"
+"Requires a supported filesystem (btrfs, ext4, or xfs)."
 msgstr ""
-"Automatisch gecomprimeerd geheugen vrijgeven wanneer het systeem meer RAM nodig heeft. Helpt om "
-"situaties met onvoldoende geheugen te voorkomen."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 238
+"Maakt wisselbestanden op schijf wanneer RAM vol is.\n"
+"Bestanden groeien en krimpen automatisch indien nodig.\n"
+"Gebruikt progressieve schaling: begint klein, verdubbelt naarmate de vraag toeneemt.\n"
+"\n"
+"Vereist een ondersteund bestandssysteem (btrfs, ext4 of xfs)."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 239
 msgid ""
-"Only compress pages that achieve this compression ratio or better. Higher values = only "
-"well-compressing data is cached."
+"Base size for each new swap file.\n"
+"With progressive scaling, this is the starting size.\n"
+"Files 1-4: base size, Files 5-8: 2x, Files 9-12: 4x, etc.\n"
+"\n"
+"512MB: Good for most systems.\n"
+"1GB: Better for systems with 8GB+ RAM."
 msgstr ""
-"Slechts pagina's comprimeren die deze compressieverhouding of beter bereiken. Hogere waarden = "
-"alleen goed te comprimeren gegevens worden gecached."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 243
-msgid "Creates a compressed virtual disk in RAM. Stores more data without using physical disk."
-msgstr ""
-"Maakt een gecomprimeerde virtuele schijf in RAM. Slaat meer gegevens op zonder gebruik te maken van "
-"een fysieke schijf."
-# 
+"Basisgrootte voor elk nieuw wisselbestand.\n"
+"Met progressieve schaling is dit de startgrootte.\n"
+"Bestanden 1-4: basisgrootte, Bestanden 5-8: 2x, Bestanden 9-12: 4x, enz.\n"
+"\n"
+"512MB: Goed voor de meeste systemen.\n"
+"1GB: Beter voor systemen met 8GB+ RAM."
+
+#
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
-msgid "Size of compressed RAM disk. Higher values allow storing more compressed data."
-msgstr ""
-"Grootte van de gecomprimeerde RAM-schijf. Hogere waarden maken het mogelijk om meer gecomprimeerde "
-"gegevens op te slaan."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 250
 msgid ""
-"LZ4: Fast but less compression.\n"
-"ZSTD: Slower but better compression."
+"Multi-Gen LRU minimum time-to-live for memory pages.\n"
+"Prevents the kernel from swapping out recently used data.\n"
+"Higher values = more protection against UI stuttering.\n"
+"\n"
+"Auto adjusts based on RAM: less RAM = more protection."
 msgstr ""
-"LZ4: Snel maar minder compressie.  \n"
-"ZSTD: Langzamer maar betere compressie."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 253
-msgid "Maximum actual RAM that zram can use. Prevents zram from consuming too much memory."
-msgstr "Maximale werkelijke RAM die zram kan gebruiken. Voorkomt dat zram te veel geheugen verbruikt."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 257
+"Multi-Gen LRU minimale time-to-live voor geheugenpagina's.\n"
+"Voorkomt dat de kernel recent gebruikte gegevens verwijdert.\n"
+"Hogere waarden = meer bescherming tegen UI-stotteren.\n"
+"\n"
+"Past zich automatisch aan op basis van RAM: minder RAM = meer bescherming."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 254
 msgid ""
-"Sets the priority for using zram vs other swap. Higher priority = zram is used first before disk "
-"swap."
+"Total physical memory (RAM) installed in the system.\n"
+"This is the hardware limit — applications and OS share this pool."
 msgstr ""
-"Stelt de prioriteit in voor het gebruik van zram versus andere swap. Hogere prioriteit = zram wordt "
-"eerst gebruikt voordat schijf-swap."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 261
-msgid "Allows zram to write incompressible data to disk. Saves RAM for data that compresses well."
-msgstr ""
-"Staat zram toe om niet-comprimeerbare gegevens naar de schijf te schrijven. Bespaart RAM voor "
-"gegevens die goed comprimeerbaar zijn."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 266
-msgid "Creates swap files on disk when RAM is full. Files grow and shrink automatically as needed."
-msgstr ""
-"Maakt swapbestanden op de schijf aan wanneer het RAM vol is. Bestanden groeien en krimpen "
-"automatisch indien nodig."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 270
-msgid "Initial size when creating new swap files. Smaller = less disk space, Larger = fewer files."
-msgstr ""
-"Initiële grootte bij het aanmaken van nieuwe swapbestanden. Kleiner = minder schijfruimte, Groter = "
-"minder bestanden."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 274
-msgid "Maximum size each swap file can grow to. Limits how much disk space a single file can use."
-msgstr ""
-"Maximale grootte waartoe elk swapbestand kan groeien. Beperkt hoeveel schijfruimte een enkel "
-"bestand kan gebruiken."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 278
-msgid "Maximum number of swap files to create. More files = more available swap space."
-msgstr "Maximaal aantal te maken swapbestanden. Meer bestanden = meer beschikbare swapruimte."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 282
+"Totaal fysiek geheugen (RAM) geïnstalleerd in het systeem.\n"
+"Dit is de hardwarelimiet — applicaties en OS delen deze pool."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 258
 msgid ""
-"How quickly swap files grow when more space is needed. Higher values = faster growth but more disk "
-"usage."
+"Memory currently in use by applications and the system.\n"
+"Includes active processes, libraries, and kernel allocations."
 msgstr ""
-"Hoe snel swapbestanden groeien wanneer er meer ruimte nodig is. Hogere waarden = snellere groei "
-"maar meer schijfruimtegebruik."
-# 
+"Geheugen dat momenteel in gebruik is door applicaties en het systeem.\n"
+"Omvat actieve processen, bibliotheken en kerneltoewijzingen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 262
+msgid ""
+"Memory available for new allocations.\n"
+"Includes free RAM plus reclaimable file cache and buffers.\n"
+"This is the practical indicator of how much RAM is vrij."
+msgstr ""
+"Geheugen beschikbaar voor nieuwe toewijzingen.\n"
+"Omvat vrije RAM plus terugwinbare bestandscache en buffers.\n"
+"Dit is de praktische indicator van hoeveel RAM vrij is."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 267
+msgid ""
+"Memory used for disk buffers and file cache.\n"
+"The kernel reclaims this automatically when applications need RAM.\n"
+"High values here are normal and indicate efficient disk caching."
+msgstr ""
+"Geheugen gebruikt voor schijfbuffers en bestandscache.\n"
+"De kernel wint dit automatisch terug wanneer applicaties RAM nodig hebben.\n"
+"Hoge waarden hier zijn normaal en duiden op efficiënte schijfcaching."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 273
+msgid ""
+"Total swap space available across all backends.\n"
+"Combines zram (compressed in RAM), zswap, and disk swap files."
+msgstr ""
+"Totale wisselruimte beschikbaar over alle backends.\n"
+"Combineert zram (gecomprimeerd in RAM), zswap en schijfwisselbestanden."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 277
+msgid ""
+"Swap data stored in compressed RAM (zswap pool or zram).\n"
+"Faster than disk swap — data is compressed and kept in memory."
+msgstr ""
+"Wisselgegevens opgeslagen in gecomprimeerde RAM (zswap-pool of zram).\n"
+"Sneller dan schijfwissel — gegevens worden gecomprimeerd en in geheugen bewaard."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 281
+msgid ""
+"Swap data written to disk (swap files or partitions).\n"
+"Slower than in-RAM swap. Used when compressed cache is full."
+msgstr ""
+"Wisselgegevens geschreven naar schijf (wisselbestanden of partities).\n"
+"Langzamer dan in-RAM swap. Gebruikt wanneer de gecomprimeerde cache vol is."
+
+#
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
-msgid "Folder where swap files are stored. Choose a location on your fastest disk for best performance."
+msgid ""
+"RAM used by the zswap compressed cache pool.\n"
+"Zswap intercepts pages being swapped out and compresses them in RAM\n"
+"before they reach the disk, reducing I/O significantly."
 msgstr ""
-"Map waar swapbestanden zijn opgeslagen. Kies een locatie op uw snelste schijf voor de beste "
-"prestaties."
-# 
+"RAM gebruikt door de zswap-gecomprimeerde cachepool.\n"
+"Zswap onderschept pagina's die worden verwisseld en comprimeert ze in RAM\n"
+"voordat ze de schijf bereiken, waardoor I/O aanzienlijk wordt verminderd."
+
+#
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
-msgid "Protects active programs from being swapped out. Prevents system freezes when memory is low."
+msgid ""
+"Original (uncompressed) size of data stored in zswap.\n"
+"Compare with Pool size to see how much RAM compression saves."
 msgstr ""
-"Beschermt actieve programma's tegen het verwisselen. Voorkomt systeembevriezingen wanneer het "
-"geheugen laag is."
-# 
+"Oorspronkelijke (niet-gecomprimeerde) grootte van gegevens opgeslagen in zswap.\n"
+"Vergelijk met Pool-grootte om te zien hoeveel RAM-compressie bespaart."
+
+#
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
 msgid ""
-"How long to keep memory before allowing swap. Lower values = more aggressive swap, Higher = more "
-"protection."
+"Compression ratio of zswap data.\n"
+"Higher = more data fits in less RAM. Typical zstd ratio: 2-4x.\n"
+"Example: 3.0x means 3 GB of data fits in ~1 GB of RAM."
 msgstr ""
-"Hoe lang het geheugen te behouden voordat swap wordt toegestaan. Lagere waarden = agressievere "
-"swap, Hogere = meer bescherming."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 300
-msgid "Shows if the swap management service is running. Green = active and working, Red = stopped or error."
-msgstr "Toont of de swapbeheer service actief is. Groen = actief en werkt, Rood = gestopt of fout."
-# 
-# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 304
-msgid "Shows the current swap mode being used. This reflects the active configuration."
-msgstr "Toont de huidige swapmodus die wordt gebruikt. Dit weerspiegelt de actieve configuratie."
+"Compressieverhouding van zswap-gegevens.\n"
+"Hoger = meer gegevens passen in minder RAM. Typische zstd-verhouding: 2-4x.\n"
+"Voorbeeld: 3.0x betekent dat 3 GB aan gegevens in ~1 GB RAM past."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 301
+msgid ""
+"Virtual (uncompressed) size of the zram block device.\n"
+"This is the maximum amount of data zram can hold before compression.\n"
+"Actual RAM usage depends on the compression ratio."
+msgstr ""
+"Virtuele (niet-gecomprimeerde) grootte van het zram-blokapparaat.\n"
+"Dit is de maximale hoeveelheid gegevens die zram kan bevatten vóór compressie.\n"
+"Het werkelijke RAM-gebruik hangt af van de compressieverhouding."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 306
+msgid ""
+"Data currently stored in zram, compressed in RAM.\n"
+"With zstd compression, actual RAM usage is typically 30-50% of this."
+msgstr ""
+"Gegevens die momenteel in zram zijn opgeslagen, gecomprimeerd in RAM.\n"
+"Met zstd-compressie is het werkelijke RAM-gebruik doorgaans 30-50% hiervan."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 310
+msgid ""
+"Compression ratio of zram data.\n"
+"Formula: original data size / compressed size.\n"
+"Higher = better compression. Typical zstd ratio: 2-4x."
+msgstr ""
+"Compressieverhouding van zram-gegevens.\n"
+"Formule: oorspronkelijke gegevensgrootte / gecomprimeerde grootte.\n"
+"Hoger = betere compressie. Typische zstd-verhouding: 2-4x."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 316
+msgid ""
+"Number of dynamic swap files and their total usage.\n"
+"Files are created and removed automatically as demand changes."
+msgstr ""
+"Aantal dynamische wisselbestanden en hun totale gebruik.\n"
+"Bestanden worden automatisch gemaakt en verwijderd naarmate de vraag verandert."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 320
+msgid ""
+"Copy all current statistics to the clipboard.\n"
+"Useful for sharing diagnostics or reporting issues."
+msgstr ""
+"Kopieer alle huidige statistieken naar het klembord.\n"
+"Handig voor het delen van diagnostiek of het melden van problemen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 325
+msgid ""
+"Shows if the swap management service is running.\n"
+"Green = active and managing swap automatically.\n"
+"Gray = stopped or not installed."
+msgstr ""
+"Toont of de wisselbeheerservice actief is.\n"
+"Groen = actief en beheert swap automatisch.\n"
+"Grijs = gestopt of niet geïnstalleerd."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 330
+msgid ""
+"The current swap mode in use.\n"
+"In Auto mode, the system detects the optimal configuration."
+msgstr ""
+"De huidige wisselmodus in gebruik.\n"
+"In de Auto-modus detecteert het systeem de optimale configuratie."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 334
+msgid "View application information and version."
+msgstr "Bekijk applicatie-informatie en versie."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 335
+msgid "Access main menu, restore defaults, and quit."
+msgstr "Open hoofdmenu, herstel standaardinstellingen en sluit af."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 336
+msgid "Apply current configuration changes to the system."
+msgstr "Pas huidige configuratiewijzigingen toe op het systeem."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 256
+msgid "Collecting data..."
+msgstr "Gegevens verzamelen..."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 319
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 362
+msgid "RAM: {}"
+msgstr "RAM: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 321
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 364
+msgid "RAM"
+msgstr "RAM"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 333
+msgid "Swap RAM: {}"
+msgstr "Swap RAM: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 335
+msgid "Swap RAM"
+msgstr "Swap RAM"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 347
+msgid "Swap Disk: {}"
+msgstr "Swap Disk: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 349
+msgid "Swap Disk"
+msgstr "Swap Disk"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 376
+msgid "Swap: {}"
+msgstr "Swap: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 378
+msgid "Swap"
+msgstr "Swap"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
+msgid "{}s ago"
+msgstr "{}s geleden"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
+msgid "now"
+msgstr "nu"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 429
+msgid "[{}]  RAM: {}  Swap RAM: {}  Swap Disk: {}"
+msgstr "[{}]  RAM: {}  Swap RAM: {}  Swap Disk: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 433
+msgid "[{}]  RAM: {}"
+msgstr "[{}]  RAM: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 436
+msgid "[{}]  RAM: {}%"
+msgstr "[{}]  RAM: {}%"
+
+#
+# #-#-#-#-#  biglinux-systemd-swap-gui.pot (biglinux-systemd-swap-gui)  #-#-#-#-#
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 39
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 136
+msgid "Welcome"
+msgstr "Welkom"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 103
+msgid "What is Swap?"
+msgstr "Wat is Swap?"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 105
+msgid ""
+"Swap is like an extension of of your computer's memory. When RAM is full, less-used data moves to "
+"swap, preventing freezes."
+msgstr ""
+"Swap is als een verlengstuk van het geheugen van uw computer. Wanneer RAM vol is, verplaatsen minder "
+"gebruikte gegevens naar swap, waardoor bevriezingen worden voorkomen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 110
+msgid "What is Zram?"
+msgstr "Wat is Zram?"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 112
+msgid ""
+"Zram creates a compressed block device in RAM. It's faster than disk swap and perfect for systems "
+"with limited disk speed."
+msgstr ""
+"Zram creëert een gecomprimeerd blokapparaat in RAM. Het is sneller dan schijfwissel en perfect voor "
+"systemen met beperkte schijfsnelheid."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 130
+msgid "What is Zswap?"
+msgstr "Wat is Zswap?"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 132
+msgid ""
+"Zswap captures swap attempts and compresses pages into a RAM cache pool before they hit the disk, "
+"reducing I/O."
+msgstr ""
+"Zswap vangt wisselpogingen op en comprimeert pagina's in een RAM-cachepool voordat ze de schijf "
+"bereiken, waardoor I/O wordt verminderd."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 137
+msgid "Automatic Mode"
+msgstr "Automatische Modus"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 139
+msgid ""
+"Recommended: Auto mode detects your hardware (RAM + Storage) and applies the optimal configuration "
+"automatically."
+msgstr ""
+"Aanbevolen: Auto-modus detecteert uw hardware (RAM + Opslag) en past de optimale configuratie "
+"automatisch toe."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 160
+msgid "Show dialog on startup"
+msgstr "Toon dialoogvenster bij opstarten"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 179
+msgid "Let's Start"
+msgstr "Laten we Beginnen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 211
+msgid "Service Status"
+msgstr "Servicestatus"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 219
+msgid "Current Mode"
+msgstr "Huidige Modus"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 225
+msgid "Live Statistics"
+msgstr "Live Statistieken"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 226
+msgid "Active system usage info"
+msgstr "Info over actief systeemgebruik"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 230
+msgid "RAM Total"
+msgstr "RAM Totaal"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 233
+msgid "RAM Used"
+msgstr "RAM Gebruikt"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 236
+msgid "RAM Available"
+msgstr "RAM Beschikbaar"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 239
+msgid "Buffers / Cache"
+msgstr "Buffers / Cache"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 243
+msgid "Swap Total"
+msgstr "Swap Totaal"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 246
+msgid "Swap in RAM"
+msgstr "Swap in RAM"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 249
+msgid "Swap on Disk"
+msgstr "Swap op Schijf"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 253
+msgid "Zswap Pool"
+msgstr "Zswap Pool"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 256
+msgid "Zswap Stored"
+msgstr "Zswap Opgeslagen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 259
+msgid "Zswap Ratio"
+msgstr "Zswap Verhouding"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 263
+msgid "Zram Capacity"
+msgstr "Zram Capaciteit"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 266
+msgid "Zram Used"
+msgstr "Zram Gebruikt"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 269
+msgid "Zram Ratio"
+msgstr "Zram Verhouding"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 273
+msgid "Swap Files"
+msgstr "Wisselbestanden"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 284
+msgid "Copy to Clipboard"
+msgstr "Kopiëren naar klembord"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 294
+msgid "Swap Mode"
+msgstr "Wisselmodus"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 295
+msgid "Choose how swap is managed on your system"
+msgstr "Kies hoe swap wordt beheerd op uw systeem"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 300
+msgid "Mode"
+msgstr "Modus"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 331
+msgid "Advanced Settings"
+msgstr "Geavanceerde instellingen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 332
+msgid "Fine-tune swap parameters"
+msgstr "Verfijn wisselparameters"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
+msgid "Zswap"
+msgstr "Zswap"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
+msgid "Compressed RAM cache for swap"
+msgstr "Gecomprimeerde RAM-cache voor swap"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 348
+msgid "Compressor"
+msgstr "Compressor"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 349
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 386
+msgid "Compression algorithm"
+msgstr "Compressiealgoritme"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 356
+msgid "Max Pool Size"
+msgstr "Max Pool-grootte"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 357
+msgid "Maximum % of RAM for cache"
+msgstr "Maximaal % RAM voor cache"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
+msgid "Zram"
+msgstr "Zram"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
+msgid "Compressed block device in RAM"
+msgstr "Gecomprimeerd blokapparaat in RAM"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 373
+msgid "Virtual Size"
+msgstr "Virtuele Grootte"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 374
+msgid "Uncompressed size (% of RAM)"
+msgstr "Niet-gecomprimeerde grootte (% van RAM)"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 385
+msgid "Algorithm"
+msgstr "Algoritme"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 394
+msgid "Memory Limit"
+msgstr "Geheugenlimiet"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 395
+msgid "Max physical RAM zram can use (OOM protection)"
+msgstr "Max fysieke RAM die zram kan gebruiken (OOM-bescherming)"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 408
+msgid "Recompression"
+msgstr "Hercompressie"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 409
+msgid "Recompress idle pages with a secondary algorithm"
+msgstr "Hercomprimeer inactieve pagina's met een secundair algoritme"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 418
+msgid "Recompression Algorithm"
+msgstr "Hercompressie-algoritme"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 419
+msgid "Secondary algorithm for better ratio on idle pages"
+msgstr "Secundair algoritme voor betere verhouding op inactieve pagina's"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
+msgid "Swap File"
+msgstr "Wisselbestand"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
+msgid "Dynamic swap files on disk"
+msgstr "Dynamische wisselbestanden op schijf"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 434
+msgid "Enabled"
+msgstr "Ingeschakeld"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 435
+msgid "Create swap files dynamically"
+msgstr "Maak wisselbestanden dynamisch aan"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 443
+msgid "Chunk Size"
+msgstr "Chunk-grootte"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 444
+msgid "Base size for each file"
+msgstr "Basisgrootte voor elk bestand"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 456
+msgid "MGLRU Anti-Thrashing"
+msgstr "MGLRU Anti-Thrashing"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 457
+msgid "Working set protection"
+msgstr "Bescherming van werkset"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 461
+msgid "Min TTL"
+msgstr "Min TTL"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 462
+msgid "Protect working set from eviction"
+msgstr "Bescherm werkset tegen uitzetting"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 800
+msgid "None"
+msgstr "Geen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 892
+msgid "No active swap systems"
+msgstr "Geen actieve wisselsystemen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 920
+msgid "=== BigLinux Swap Manager - Statistics ==="
+msgstr "=== BigLinux Swap Manager - Statistieken ==="
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 947
+msgid "Swap Devices:"
+msgstr "Wisselapparaten:"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 995
+msgid "Statistics copied to clipboard"
+msgstr "Statistieken gekopieerd naar klembord"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/application.py, line: 169
+msgid "Configure swap settings for optimal performance"
+msgstr "Configureer swap-instellingen voor optimale prestaties"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 137
+msgid "Restore Defaults"
+msgstr "Herstel Standaardwaarden"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 145
+msgid "Apply"
+msgstr "Toepassen"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 223
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 271
+msgid "Restart Required"
+msgstr "Herstart Vereist"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 225
+msgid ""
+"There is data in swap.\n"
+"\n"
+"For safety, please restart your computer to disable swap.\n"
+"This prevents system freezes from disabling active swap."
+msgstr ""
+"Er zijn gegevens in swap.\n"
+"\n"
+"Voor de veiligheid, herstart uw computer om swap uit te schakelen.\n"
+"Dit voorkomt systeembevriezingen door het uitschakelen van actieve swap."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 232
+msgid "Stopping swap service..."
+msgstr "Swap-service stoppen..."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 238
+msgid "Swap management disabled"
+msgstr "Wisselbeheer uitgeschakeld"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 243
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 259
+msgid "Failed: {}"
+msgstr "Mislukt: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 253
+msgid "Applying configuration..."
+msgstr "Configuratie toepassen..."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 273
+msgid ""
+"Configuration saved successfully.\n"
+"\n"
+"There is data in swap. For safety, please restart\n"
+"your computer to apply the changes without risk of freezes."
+msgstr ""
+"Configuratie succesvol opgeslagen.\n"
+"\n"
+"Er zijn gegevens in swap. Voor de veiligheid, herstart\n"
+"uw computer om de wijzigingen toe te passen zonder risico op bevriezingen."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 286
+msgid "Configuration Applied"
+msgstr "Configuratie Toegepast"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 287
+msgid "Configuration applied and service restarted successfully."
+msgstr "Configuratie toegepast en service succesvol opnieuw gestart."
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 291
+msgid "Config saved but restart failed: {}"
+msgstr "Configuratie opgeslagen maar herstart mislukt: {}"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 311
+msgid "Refreshed"
+msgstr "Verfrist"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 317
+msgid "Settings restored to defaults"
+msgstr "Instellingen hersteld naar standaardwaarden"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 326
+msgid "About"
+msgstr "Over"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 327
+msgid "Quit"
+msgstr "Afsluiten"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 29
+msgid "Swap Manager"
+msgstr "Swap Manager"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 99
+msgid "Auto (Recommended)"
+msgstr "Auto (Aanbevolen)"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 100
+msgid "Zswap + SwapFile"
+msgstr "Zswap + SwapFile"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 101
+msgid "Zram + SwapFile"
+msgstr "Zram + SwapFile"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 102
+msgid "Zram Only"
+msgstr "Alleen Zram"
+
+#
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 103
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 165
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 322
+msgid "Disabled"
+msgstr "Uitgeschakeld"

@@ -44,7 +44,6 @@ msgstr ""
 "LZ4: По-бързо, но с по-ниска компресия. Полезно само ако CPU е много бавен."
 # 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 194
-#, python-format
 msgid ""
 "Maximum percentage of RAM reserved for the zswap compressed cache.\n"
 "Higher = more data cached in RAM before writing to disk.\n"
@@ -85,7 +84,6 @@ msgstr ""
 "LZ4: По-бърз, но компресира по-малко. Може да разхищава RAM."
 # 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 212
-#, python-format
 msgid ""
 "Maximum real RAM that zram can consume.\n"
 "Acts as a safety net against OOM (Out of Memory).\n"
@@ -274,7 +272,6 @@ msgstr ""
 "Фактическото използване на RAM зависи от съотношението на компресията."
 # 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 306
-#, python-format
 msgid ""
 "Data currently stored in zram, compressed in RAM.\n"
 "With zstd compression, actual RAM usage is typically 30-50% of this."
@@ -576,7 +573,6 @@ msgid "Max Pool Size"
 msgstr "Максимален размер на пула"
 # 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 357
-#, python-format
 msgid "Maximum % of RAM for cache"
 msgstr "Максимален % от RAM за кеш"
 # 
@@ -593,7 +589,6 @@ msgid "Virtual Size"
 msgstr "Виртуален размер"
 # 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 374
-#, python-format
 msgid "Uncompressed size (% of RAM)"
 msgstr "Некомпресирани размер (% от RAM)"
 # 
