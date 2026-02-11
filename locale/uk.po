@@ -14,7 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: BigLinux Translator\n"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 181
 msgid ""
@@ -31,7 +30,6 @@ msgstr ""
 "\n"
 "У режимі Авто всі параметри оптимізуються автоматично,\n"
 "а розширені налаштування приховані."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 189
 msgid ""
@@ -44,7 +42,6 @@ msgstr ""
 "Рекомендовано для більшості систем — сучасні ЦП ефективно з цим справляються.\n"
 "\n"
 "LZ4: Швидше, але нижче стиснення. Корисно лише якщо ЦП дуже повільний."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 194
 msgid ""
@@ -59,7 +56,6 @@ msgstr ""
 "Нижче = більше вільної RAM для програм.\n"
 "\n"
 "Рекомендовано: 25-50% залежно від навантаження."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
 msgid ""
@@ -74,7 +70,6 @@ msgstr ""
 "Приклад: 80% зі стисненням 3:1 використовує ~27% реальної RAM.\n"
 "\n"
 "Вищі значення дозволяють зберігати більше стиснутих даних."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 207
 msgid ""
@@ -87,7 +82,6 @@ msgstr ""
 "Рекомендовано для всіх систем — сучасні ЦП добре з цим справляються.\n"
 "\n"
 "LZ4: Швидше, але стискає менше. Може витрачати RAM даремно."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 212
 msgid ""
@@ -102,7 +96,6 @@ msgstr ""
 "Якщо нестисливі дані заповнюють zram, це запобігає зависанню системи.\n"
 "\n"
 "Рекомендовано: 60-75% від загальної RAM."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 218
 msgid ""
@@ -119,7 +112,6 @@ msgstr ""
 "\n"
 "Потрібне ядро 6.1+ з CONFIG_ZRAM_MULTI_COMP.\n"
 "Економить RAM за рахунок використання ЦП у фоновому режимі."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 225
 msgid ""
@@ -136,7 +128,6 @@ msgstr ""
 "Zstd: Найкращий коефіцієнт стиснення (рекомендовано).\n"
 "Deflate: Гарне співвідношення, широко підтримується.\n"
 "LZ4HC: Швидше, але менший виграш у стисненні."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 233
 msgid ""
@@ -151,7 +142,6 @@ msgstr ""
 "Використовує прогресивне масштабування: починається з малого, подвоюється зі зростанням попиту.\n"
 "\n"
 "Потрібна підтримувана файлова система (btrfs, ext4 або xfs)."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 239
 msgid ""
@@ -168,7 +158,6 @@ msgstr ""
 "\n"
 "512MB: Добре для більшості систем.\n"
 "1GB: Краще для систем з 8GB+ RAM."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
 msgid ""
@@ -183,7 +172,6 @@ msgstr ""
 "Вищі значення = більше захисту від затримок інтерфейсу.\n"
 "\n"
 "Автоматично налаштовується на основі RAM: менше RAM = більше захисту."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 254
 msgid ""
@@ -192,7 +180,6 @@ msgid ""
 msgstr ""
 "Загальна фізична пам'ять (RAM), встановлена в системі.\n"
 "Це апаратне обмеження — програми та ОС ділять цей пул."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 258
 msgid ""
@@ -201,7 +188,6 @@ msgid ""
 msgstr ""
 "Пам'ять, яка зараз використовується програмами та системою.\n"
 "Включає активні процеси, бібліотеки та виділення ядра."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 262
 msgid ""
@@ -212,7 +198,6 @@ msgstr ""
 "Пам'ять, доступна для нових виділень.\n"
 "Включає вільну RAM плюс відновлюваний кеш файлів і буфери.\n"
 "Це практичний показник того, скільки RAM вільно."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 267
 msgid ""
@@ -223,7 +208,6 @@ msgstr ""
 "Пам'ять, що використовується для дискових буферів і кешу файлів.\n"
 "Ядро автоматично повертає це, коли програмам потрібна RAM.\n"
 "Високі значення тут є нормальними та вказують на ефективне кешування диска."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 273
 msgid ""
@@ -232,7 +216,6 @@ msgid ""
 msgstr ""
 "Загальний простір підкачки, доступний на всіх бекендах.\n"
 "Поєднує zram (стиснутий в RAM), zswap та файли підкачки на диску."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 277
 msgid ""
@@ -241,7 +224,6 @@ msgid ""
 msgstr ""
 "Дані підкачки, що зберігаються в стиснутій RAM (пул zswap або zram).\n"
 "Швидше, ніж підкачка на диску — дані стискаються та зберігаються в пам'яті."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 281
 msgid ""
@@ -250,7 +232,6 @@ msgid ""
 msgstr ""
 "Дані підкачки, записані на диск (файли підкачки або розділи).\n"
 "Повільніше, ніж підкачка в RAM. Використовується, коли стиснутий кеш заповнений."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
 msgid ""
@@ -261,7 +242,6 @@ msgstr ""
 "RAM, що використовується пулом стиснутого кешу zswap.\n"
 "Zswap перехоплює сторінки, які вивантажуються, і стискає їх у RAM\n"
 "перш ніж вони досягнуть диска, значно зменшуючи I/O."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
 msgid ""
@@ -270,7 +250,6 @@ msgid ""
 msgstr ""
 "Оригінальний (нестиснутий) розмір даних, що зберігаються в zswap.\n"
 "Порівняйте з розміром пулу, щоб побачити, скільки RAM економить стиснення."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
 msgid ""
@@ -281,7 +260,6 @@ msgstr ""
 "Коефіцієнт стиснення даних zswap.\n"
 "Вище = більше даних поміщається в меншому обсязі RAM. Типове співвідношення zstd: 2-4x.\n"
 "Приклад: 3.0x означає, що 3 ГБ даних поміщається в ~1 ГБ RAM."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 301
 msgid ""
@@ -292,7 +270,6 @@ msgstr ""
 "Віртуальний (нестиснутий) розмір блокового пристрою zram.\n"
 "Це максимальна кількість даних, яку zram може утримувати перед стисненням.\n"
 "Фактичне використання RAM залежить від коефіцієнта стиснення."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 306
 msgid ""
@@ -301,7 +278,6 @@ msgid ""
 msgstr ""
 "Дані, що зараз зберігаються в zram, стиснуті в RAM.\n"
 "Зі стисненням zstd фактичне використання RAM зазвичай становить 30-50% від цього."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 310
 msgid ""
@@ -312,7 +288,6 @@ msgstr ""
 "Коефіцієнт стиснення даних zram.\n"
 "Формула: оригінальний розмір даних / стиснутий розмір.\n"
 "Вище = краще стиснення. Типове співвідношення zstd: 2-4x."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 316
 msgid ""
@@ -321,7 +296,6 @@ msgid ""
 msgstr ""
 "Кількість динамічних файлів підкачки та їх загальне використання.\n"
 "Файли створюються та видаляються автоматично зі зміною попиту."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 320
 msgid ""
@@ -330,7 +304,6 @@ msgid ""
 msgstr ""
 "Копіювати всю поточну статистику в буфер обміну.\n"
 "Корисно для обміну діагностикою або повідомлення про проблеми."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 325
 msgid ""
@@ -341,7 +314,6 @@ msgstr ""
 "Показує, чи запущена служба керування підкачкою.\n"
 "Зелений = активна та управляє підкачкою автоматично.\n"
 "Сірий = зупинена або не встановлена."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 330
 msgid ""
@@ -350,94 +322,76 @@ msgid ""
 msgstr ""
 "Поточний режим підкачки.\n"
 "У режимі Авто система визначає оптимальну конфігурацію."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 334
 msgid "View application information and version."
 msgstr "Переглянути інформацію про програму та версію."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 335
 msgid "Access main menu, restore defaults, and quit."
 msgstr "Доступ до головного меню, відновлення стандартних налаштувань і вихід."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 336
 msgid "Apply current configuration changes to the system."
 msgstr "Застосувати поточні зміни конфігурації до системи."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 256
 msgid "Collecting data..."
 msgstr "Збір даних..."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 319
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 362
 msgid "RAM: {}"
 msgstr "RAM: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 321
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 364
 msgid "RAM"
 msgstr "RAM"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 333
 msgid "Swap RAM: {}"
 msgstr "Swap RAM: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 335
 msgid "Swap RAM"
 msgstr "Swap RAM"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 347
 msgid "Swap Disk: {}"
 msgstr "Swap Диск: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 349
 msgid "Swap Disk"
 msgstr "Swap Диск"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 376
 msgid "Swap: {}"
 msgstr "Swap: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 378
 msgid "Swap"
 msgstr "Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
 msgid "{}s ago"
 msgstr "{}с тому"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
 msgid "now"
 msgstr "зараз"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 429
 msgid "[{}]  RAM: {}  Swap RAM: {}  Swap Disk: {}"
 msgstr "[{}]  RAM: {}  Swap RAM: {}  Swap Диск: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 433
 msgid "[{}]  RAM: {}"
 msgstr "[{}]  RAM: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 436
 msgid "[{}]  RAM: {}%"
 msgstr "[{}]  RAM: {}%"
-
 #
 # #-#-#-#-#  biglinux-systemd-swap-gui.pot (biglinux-systemd-swap-gui)  #-#-#-#-#
 #
@@ -445,12 +399,10 @@ msgstr "[{}]  RAM: {}%"
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 136
 msgid "Welcome"
 msgstr "Ласкаво просимо"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 103
 msgid "What is Swap?"
 msgstr "Що таке Swap?"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 105
 msgid ""
@@ -459,12 +411,10 @@ msgid ""
 msgstr ""
 "Swap схожий на розширення пам'яті вашого комп'ютера. Коли RAM заповнена, менш використовувані дані переміщуються в "
 "swap, запобігаючи зависанню."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 110
 msgid "What is Zram?"
 msgstr "Що таке Zram?"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 112
 msgid ""
@@ -473,12 +423,10 @@ msgid ""
 msgstr ""
 "Zram створює стиснутий блоковий пристрій в RAM. Це швидше, ніж підкачка на диску, і ідеально підходить для систем "
 "з обмеженою швидкістю диска."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 130
 msgid "What is Zswap?"
 msgstr "Що таке Zswap?"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 132
 msgid ""
@@ -487,12 +435,10 @@ msgid ""
 msgstr ""
 "Zswap перехоплює спроби підкачки та стискає сторінки в пул кешу RAM перед тим, як вони потраплять на диск, "
 "зменшуючи I/O."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 137
 msgid "Automatic Mode"
 msgstr "Автоматичний режим"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 139
 msgid ""
@@ -501,313 +447,251 @@ msgid ""
 msgstr ""
 "Рекомендовано: Режим Авто виявляє ваше апаратне забезпечення (RAM + Накопичувач) і застосовує оптимальну конфігурацію "
 "автоматично."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 160
 msgid "Show dialog on startup"
 msgstr "Показувати діалог під час запуску"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 179
 msgid "Let's Start"
 msgstr "Почнемо"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 211
 msgid "Service Status"
 msgstr "Статус служби"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 219
 msgid "Current Mode"
 msgstr "Поточний режим"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 225
 msgid "Live Statistics"
 msgstr "Статистика Live"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 226
 msgid "Active system usage info"
 msgstr "Інформація про активне використання системи"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 230
 msgid "RAM Total"
 msgstr "RAM Всього"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 233
 msgid "RAM Used"
 msgstr "RAM Використано"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 236
 msgid "RAM Available"
 msgstr "RAM Доступно"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 239
 msgid "Buffers / Cache"
 msgstr "Буфери / Кеш"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 243
 msgid "Swap Total"
 msgstr "Swap Всього"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 246
 msgid "Swap in RAM"
 msgstr "Swap у RAM"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 249
 msgid "Swap on Disk"
 msgstr "Swap на Диску"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 253
 msgid "Zswap Pool"
 msgstr "Zswap Пул"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 256
 msgid "Zswap Stored"
 msgstr "Zswap Збережено"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 259
 msgid "Zswap Ratio"
 msgstr "Zswap Співвідношення"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 263
 msgid "Zram Capacity"
 msgstr "Zram Ємність"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 266
 msgid "Zram Used"
 msgstr "Zram Використано"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 269
 msgid "Zram Ratio"
 msgstr "Zram Співвідношення"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 273
 msgid "Swap Files"
 msgstr "Swap Файли"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 284
 msgid "Copy to Clipboard"
 msgstr "Копіювати в буфер обміну"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 294
 msgid "Swap Mode"
 msgstr "Режим Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 295
 msgid "Choose how swap is managed on your system"
 msgstr "Виберіть, як керувати підкачкою у вашій системі"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 300
 msgid "Mode"
 msgstr "Режим"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 331
 msgid "Advanced Settings"
 msgstr "Розширені Налаштування"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 332
 msgid "Fine-tune swap parameters"
 msgstr "Точне налаштування параметрів підкачки"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
 msgid "Zswap"
 msgstr "Zswap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
 msgid "Compressed RAM cache for swap"
 msgstr "Стиснутий кеш RAM для swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 348
 msgid "Compressor"
 msgstr "Компресор"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 349
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 386
 msgid "Compression algorithm"
 msgstr "Алгоритм стиснення"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 356
 msgid "Max Pool Size"
 msgstr "Макс Розмір Пулу"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 357
 msgid "Maximum % of RAM for cache"
 msgstr "Максимум % RAM для кешу"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
 msgid "Zram"
 msgstr "Zram"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
 msgid "Compressed block device in RAM"
 msgstr "Стиснутий блоковий пристрій в RAM"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 373
 msgid "Virtual Size"
 msgstr "Віртуальний Розмір"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 374
 msgid "Uncompressed size (% of RAM)"
 msgstr "Нестиснутий розмір (% від RAM)"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 385
 msgid "Algorithm"
 msgstr "Алгоритм"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 394
 msgid "Memory Limit"
 msgstr "Ліміт Пам'яті"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 395
 msgid "Max physical RAM zram can use (OOM protection)"
 msgstr "Макс фізичної RAM, яку zram може використовувати (захист OOM)"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 408
 msgid "Recompression"
 msgstr "Рекомпресія"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 409
 msgid "Recompress idle pages with a secondary algorithm"
 msgstr "Рекомпресувати неактивні сторінки вторинним алгоритмом"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 418
 msgid "Recompression Algorithm"
 msgstr "Алгоритм Рекомпресії"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 419
 msgid "Secondary algorithm for better ratio on idle pages"
 msgstr "Вторинний алгоритм для кращого співвідношення на неактивних сторінках"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
 msgid "Swap File"
 msgstr "Файл Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
 msgid "Dynamic swap files on disk"
 msgstr "Динамічні файли swap на диску"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 434
 msgid "Enabled"
 msgstr "Увімкнено"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 435
 msgid "Create swap files dynamically"
 msgstr "Створювати файли swap динамічно"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 443
 msgid "Chunk Size"
 msgstr "Розмір Частини"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 444
 msgid "Base size for each file"
 msgstr "Базовий розмір для кожного файлу"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 456
 msgid "MGLRU Anti-Thrashing"
 msgstr "MGLRU Anti-Thrashing"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 457
 msgid "Working set protection"
 msgstr "Захист робочого набору"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 461
 msgid "Min TTL"
 msgstr "Мін TTL"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 462
 msgid "Protect working set from eviction"
 msgstr "Захистити робочий набір від вилучення"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 800
 msgid "None"
 msgstr "Немає"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 892
 msgid "No active swap systems"
 msgstr "Немає активних систем swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 920
 msgid "=== BigLinux Swap Manager - Statistics ==="
 msgstr "=== BigLinux Менеджер Swap - Статистика ==="
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 947
 msgid "Swap Devices:"
 msgstr "Пристрої Swap:"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 995
 msgid "Statistics copied to clipboard"
 msgstr "Статистику скопійовано в буфер обміну"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/application.py, line: 169
 msgid "Configure swap settings for optimal performance"
 msgstr "Налаштуйте параметри swap для оптимальної продуктивності"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 137
 msgid "Restore Defaults"
 msgstr "Відновити Налаштування"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 145
 msgid "Apply"
 msgstr "Застосувати"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
 #
@@ -817,7 +701,6 @@ msgstr "Застосувати"
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 271
 msgid "Restart Required"
 msgstr "Потрібен Перезапуск"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 225
 msgid ""
@@ -830,28 +713,23 @@ msgstr ""
 "\n"
 "Для безпеки перезавантажте комп'ютер, щоб вимкнути swap.\n"
 "Це запобігає зависанню системи через вимкнення активного swap."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 232
 msgid "Stopping swap service..."
 msgstr "Зупинка служби swap..."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 238
 msgid "Swap management disabled"
 msgstr "Керування swap вимкнено"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 243
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 259
 msgid "Failed: {}"
 msgstr "Помилка: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 253
 msgid "Applying configuration..."
 msgstr "Застосування конфігурації..."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 273
 msgid ""
@@ -864,67 +742,54 @@ msgstr ""
 "\n"
 "У swap є дані. Для безпеки, будь ласка, перезавантажте\n"
 "ваш комп'ютер, щоб застосувати зміни без ризику зависання."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 286
 msgid "Configuration Applied"
 msgstr "Конфігурацію Застосовано"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 287
 msgid "Configuration applied and service restarted successfully."
 msgstr "Конфігурацію застосовано, службу успішно перезапущено."
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 291
 msgid "Config saved but restart failed: {}"
 msgstr "Конфіг збережено, але перезапуск не вдався: {}"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 311
 msgid "Refreshed"
 msgstr "Оновлено"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 317
 msgid "Settings restored to defaults"
 msgstr "Налаштування відновлено до стандартних"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 326
 msgid "About"
 msgstr "Про програму"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 327
 msgid "Quit"
 msgstr "Вийти"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 29
 msgid "Swap Manager"
 msgstr "Менеджер Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 99
 msgid "Auto (Recommended)"
 msgstr "Авто (Рекомендовано)"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 100
 msgid "Zswap + SwapFile"
 msgstr "Zswap + Файл Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 101
 msgid "Zram + SwapFile"
 msgstr "Zram + Файл Swap"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 102
 msgid "Zram Only"
 msgstr "Тільки Zram"
-
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 103
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 165

@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the biglinux-systemd-swap-gui package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: biglinux-systemd-swap-gui\n"
@@ -13,9 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: BigLinux Translator\n"
-
-#
+"X-Generator: attranslate\n"
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 181
 msgid ""
 "Auto: Detects the best settings based on your hardware.\n"
@@ -31,8 +30,7 @@ msgstr ""
 "\n"
 "Στην Αυτόματη λειτουργία, όλες οι παράμετροι βελτιστοποιούνται αυτόματα\n"
 "και οι σύνθετες ρυθμίσεις είναι κρυμμένες."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 189
 msgid ""
 "Zstd: Better compression ratio, stores more data in less RAM.\n"
@@ -44,9 +42,9 @@ msgstr ""
 "Συνιστάται για τα περισσότερα συστήματα — οι σύγχρονοι επεξεργαστές το χειρίζονται αποτελεσματικά.\n"
 "\n"
 "LZ4: Ταχύτερο αλλά χαμηλότερη συμπίεση. Χρήσιμο μόνο αν ο επεξεργαστής είναι πολύ αργός."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 194
+#, python-format
 msgid ""
 "Maximum percentage of RAM reserved for the zswap compressed cache.\n"
 "Higher = more data cached in RAM before writing to disk.\n"
@@ -59,8 +57,7 @@ msgstr ""
 "Χαμηλότερο = περισσότερη ελεύθερη RAM για εφαρμογές.\n"
 "\n"
 "Συνιστάται: 25-50% ανάλογα με τον φόρτο εργασίας."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 201
 msgid ""
 "Virtual (uncompressed) size of the zram block device.\n"
@@ -74,8 +71,7 @@ msgstr ""
 "Παράδειγμα: 80% με συμπίεση 3:1 χρησιμοποιεί ~27% της πραγματικής RAM.\n"
 "\n"
 "Υψηλότερες τιμές επιτρέπουν την αποθήκευση περισσότερων συμπιεσμένων δεδομένων."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 207
 msgid ""
 "Zstd: Better compression ratio, saves more memory.\n"
@@ -87,9 +83,9 @@ msgstr ""
 "Συνιστάται για όλα τα συστήματα — οι σύγχρονοι επεξεργαστές το χειρίζονται καλά.\n"
 "\n"
 "LZ4: Ταχύτερο αλλά συμπιέζει λιγότερο. Μπορεί να σπαταλήσει RAM."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 212
+#, python-format
 msgid ""
 "Maximum real RAM that zram can consume.\n"
 "Acts as a safety net against OOM (Out of Memory).\n"
@@ -102,8 +98,7 @@ msgstr ""
 "Εάν μη συμπιέσιμα δεδομένα γεμίσουν το zram, αυτό αποτρέπει παγώματα του συστήματος.\n"
 "\n"
 "Συνιστάται: 60-75% της συνολικής RAM."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 218
 msgid ""
 "Recompress idle/huge pages with a secondary algorithm.\n"
@@ -119,8 +114,7 @@ msgstr ""
 "\n"
 "Απαιτεί πυρήνα 6.1+ με CONFIG_ZRAM_MULTI_COMP.\n"
 "Εξοικονομεί RAM με κόστος τη χρήση CPU στο παρασκήνιο."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 225
 msgid ""
 "Secondary algorithm used for recompressing idle pages.\n"
@@ -136,8 +130,7 @@ msgstr ""
 "Zstd: Καλύτερη αναλογία συμπίεσης (συνιστάται).\n"
 "Deflate: Καλή αναλογία, ευρέως υποστηριζόμενο.\n"
 "LZ4HC: Ταχύτερο αλλά μικρότερο κέρδος συμπίεσης."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 233
 msgid ""
 "Creates swap files on disk when RAM is full.\n"
@@ -151,8 +144,7 @@ msgstr ""
 "Χρησιμοποιεί προοδευτική κλιμάκωση: ξεκινά μικρό, διπλασιάζεται καθώς αυξάνεται η ζήτηση.\n"
 "\n"
 "Απαιτεί υποστηριζόμενο σύστημα αρχείων (btrfs, ext4 ή xfs)."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 239
 msgid ""
 "Base size for each new swap file.\n"
@@ -168,8 +160,7 @@ msgstr ""
 "\n"
 "512MB: Καλό για τα περισσότερα συστήματα.\n"
 "1GB: Καλύτερο για συστήματα με 8GB+ RAM."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 247
 msgid ""
 "Multi-Gen LRU minimum time-to-live for memory pages.\n"
@@ -183,8 +174,7 @@ msgstr ""
 "Υψηλότερες τιμές = περισσότερη προστασία έναντι διακοπών στο UI.\n"
 "\n"
 "Αυτόματη προσαρμογή βάσει RAM: λιγότερη RAM = περισσότερη προστασία."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 254
 msgid ""
 "Total physical memory (RAM) installed in the system.\n"
@@ -192,8 +182,7 @@ msgid ""
 msgstr ""
 "Συνολική φυσική μνήμη (RAM) εγκατεστημένη στο σύστημα.\n"
 "Αυτό είναι το όριο υλικού — οι εφαρμογές και το λειτουργικό σύστημα μοιράζονται αυτόν τον πόρο."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 258
 msgid ""
 "Memory currently in use by applications and the system.\n"
@@ -201,8 +190,7 @@ msgid ""
 msgstr ""
 "Μνήμη που χρησιμοποιείται επί του παρόντος από εφαρμογές και το σύστημα.\n"
 "Περιλαμβάνει ενεργές διεργασίες, βιβλιοθήκες και κατανεμήσεις πυρήνα."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 262
 msgid ""
 "Memory available for new allocations.\n"
@@ -212,8 +200,7 @@ msgstr ""
 "Μνήμη διαθέσιμη για νέες κατανεμήσεις.\n"
 "Περιλαμβάνει ελεύθερη RAM συν ανακτήσιμη κρυφή μνήμη αρχείων και buffers.\n"
 "Αυτός είναι ο πρακτικός δείκτης του πόση RAM είναι ελεύθερη."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 267
 msgid ""
 "Memory used for disk buffers and file cache.\n"
@@ -223,8 +210,7 @@ msgstr ""
 "Μνήμη που χρησιμοποιείται για buffers δίσκου και κρυφή μνήμη αρχείων.\n"
 "Ο πυρήνας το ανακτά αυτόματα όταν οι εφαρμογές χρειάζονται RAM.\n"
 "Υψηλές τιμές εδώ είναι φυσιολογικές και δείχνουν αποτελεσματική κρυφή μνήμη δίσκου."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 273
 msgid ""
 "Total swap space available across all backends.\n"
@@ -232,8 +218,7 @@ msgid ""
 msgstr ""
 "Συνολικός χώρος swap διαθέσιμος σε όλα τα συστήματα υποστήριξης.\n"
 "Συνδυάζει zram (συμπιεσμένο σε RAM), zswap και αρχεία swap δίσκου."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 277
 msgid ""
 "Swap data stored in compressed RAM (zswap pool or zram).\n"
@@ -241,8 +226,7 @@ msgid ""
 msgstr ""
 "Δεδομένα swap αποθηκευμένα σε συμπιεσμένη RAM (zswap pool ή zram).\n"
 "Ταχύτερο από το swap δίσκου — τα δεδομένα συμπιέζονται και διατηρούνται στη μνήμη."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 281
 msgid ""
 "Swap data written to disk (swap files or partitions).\n"
@@ -250,8 +234,7 @@ msgid ""
 msgstr ""
 "Δεδομένα swap που γράφονται στον δίσκο (αρχεία swap ή κατατμήσεις).\n"
 "Πιο αργό από το swap σε RAM. Χρησιμοποιείται όταν η συμπιεσμένη κρυφή μνήμη είναι πλήρης."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 286
 msgid ""
 "RAM used by the zswap compressed cache pool.\n"
@@ -261,8 +244,7 @@ msgstr ""
 "RAM που χρησιμοποιείται από το pool συμπιεσμένης κρυφής μνήμης zswap.\n"
 "Το Zswap παρεμποδίζει σελίδες που γίνονται swap out και τις συμπιέζει στη RAM\n"
 "πριν φτάσουν στον δίσκο, μειώνοντας σημαντικά το I/O."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 291
 msgid ""
 "Original (uncompressed) size of data stored in zswap.\n"
@@ -270,8 +252,7 @@ msgid ""
 msgstr ""
 "Αρχικό (μη συμπιεσμένο) μέγεθος δεδομένων που είναι αποθηκευμένα στο zswap.\n"
 "Συγκρίνετε με το μέγεθος Pool για να δείτε πόση RAM εξοικονομεί η συμπίεση."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 295
 msgid ""
 "Compression ratio of zswap data.\n"
@@ -281,8 +262,7 @@ msgstr ""
 "Αναλογία συμπίεσης δεδομένων zswap.\n"
 "Υψηλότερη = περισσότερα δεδομένα χωρούν σε λιγότερη RAM. Τυπική αναλογία zstd: 2-4x.\n"
 "Παράδειγμα: 3.0x σημαίνει ότι 3 GB δεδομένων χωρούν σε ~1 GB RAM."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 301
 msgid ""
 "Virtual (uncompressed) size of the zram block device.\n"
@@ -292,17 +272,16 @@ msgstr ""
 "Εικονικό (μη συμπιεσμένο) μέγεθος της συσκευής μπλοκ zram.\n"
 "Αυτό είναι το μέγιστο ποσό δεδομένων που μπορεί να κρατήσει το zram πριν από τη συμπίεση.\n"
 "Η πραγματική χρήση RAM εξαρτάται από την αναλογία συμπίεσης."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 306
+#, python-format
 msgid ""
 "Data currently stored in zram, compressed in RAM.\n"
 "With zstd compression, actual RAM usage is typically 30-50% of this."
 msgstr ""
 "Δεδομένα που είναι αποθηκευμένα επί του παρόντος στο zram, συμπιεσμένα στη RAM.\n"
 "Με συμπίεση zstd, η πραγματική χρήση RAM είναι τυπικά 30-50% αυτού."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 310
 msgid ""
 "Compression ratio of zram data.\n"
@@ -312,8 +291,7 @@ msgstr ""
 "Αναλογία συμπίεσης δεδομένων zram.\n"
 "Τύπος: αρχικό μέγεθος δεδομένων / συμπιεσμένο μέγεθος.\n"
 "Υψηλότερη = καλύτερη συμπίεση. Τυπική αναλογία zstd: 2-4x."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 316
 msgid ""
 "Number of dynamic swap files and their total usage.\n"
@@ -321,8 +299,7 @@ msgid ""
 msgstr ""
 "Αριθμός δυναμικών αρχείων swap και η συνολική χρήση τους.\n"
 "Τα αρχεία δημιουργούνται και αφαιρούνται αυτόματα καθώς αλλάζει η ζήτηση."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 320
 msgid ""
 "Copy all current statistics to the clipboard.\n"
@@ -330,8 +307,7 @@ msgid ""
 msgstr ""
 "Αντιγραφή όλων των τρεχουσών στατιστικών στο πρόχειρο.\n"
 "Χρήσιμο για κοινή χρήση διαγνωστικών ή αναφορά προβλημάτων."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 325
 msgid ""
 "Shows if the swap management service is running.\n"
@@ -341,8 +317,7 @@ msgstr ""
 "Δείχνει εάν η υπηρεσία διαχείρισης swap εκτελείται.\n"
 "Πράσινο = ενεργό και διαχειρίζεται το swap αυτόματα.\n"
 "Γκρι = σταμάτησε ή δεν έχει εγκατασταθεί."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 330
 msgid ""
 "The current swap mode in use.\n"
@@ -350,108 +325,88 @@ msgid ""
 msgstr ""
 "Η τρέχουσα λειτουργία swap που χρησιμοποιείται.\n"
 "Στην Αυτόματη λειτουργία, το σύστημα εντοπίζει τη βέλτιστη διαμόρφωση."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 334
 msgid "View application information and version."
 msgstr "Προβολή πληροφοριών εφαρμογής και έκδοσης."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 335
 msgid "Access main menu, restore defaults, and quit."
 msgstr "Πρόσβαση στο κύριο μενού, επαναφορά προεπιλογών και έξοδος."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 336
 msgid "Apply current configuration changes to the system."
 msgstr "Εφαρμογή τρεχουσών αλλαγών διαμόρφωσης στο σύστημα."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 256
 msgid "Collecting data..."
 msgstr "Συλλογή δεδομένων..."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 319
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 362
 msgid "RAM: {}"
 msgstr "RAM: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 321
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 364
 msgid "RAM"
 msgstr "RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 333
 msgid "Swap RAM: {}"
 msgstr "Swap RAM: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 335
 msgid "Swap RAM"
 msgstr "Swap RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 347
 msgid "Swap Disk: {}"
 msgstr "Swap Δίσκου: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 349
 msgid "Swap Disk"
 msgstr "Swap Δίσκου"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 376
 msgid "Swap: {}"
 msgstr "Swap: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 378
 msgid "Swap"
 msgstr "Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
 msgid "{}s ago"
 msgstr "πριν από {}δ"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 423
 msgid "now"
 msgstr "τώρα"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 429
 msgid "[{}]  RAM: {}  Swap RAM: {}  Swap Disk: {}"
 msgstr "[{}]  RAM: {}  Swap RAM: {}  Swap Δίσκου: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 433
 msgid "[{}]  RAM: {}"
 msgstr "[{}]  RAM: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/memory_chart.py, line: 436
 msgid "[{}]  RAM: {}%"
 msgstr "[{}]  RAM: {}%"
-
-#
+# 
 # #-#-#-#-#  biglinux-systemd-swap-gui.pot (biglinux-systemd-swap-gui)  #-#-#-#-#
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 39
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 136
 msgid "Welcome"
 msgstr "Καλώς ήλθατε"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 103
 msgid "What is Swap?"
 msgstr "Τι είναι το Swap;"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 105
 msgid ""
 "Swap is like an extension of of your computer's memory. When RAM is full, less-used data moves to "
@@ -459,13 +414,11 @@ msgid ""
 msgstr ""
 "Το Swap είναι σαν επέκταση της μνήμης του υπολογιστή σας. Όταν η RAM είναι πλήρης, λιγότερο "
 "χρησιμοποιημένα δεδομένα μετακινούνται στο swap, αποτρέποντας τα παγώματα."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 110
 msgid "What is Zram?"
 msgstr "Τι είναι το Zram;"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 112
 msgid ""
 "Zram creates a compressed block device in RAM. It's faster than disk swap and perfect for systems "
@@ -473,13 +426,11 @@ msgid ""
 msgstr ""
 "Το Zram δημιουργεί μια συμπιεσμένη συσκευή μπλοκ στη RAM. Είναι ταχύτερο από το swap δίσκου και "
 "ιδανικό για συστήματα με περιορισμένη ταχύτητα δίσκου."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 130
 msgid "What is Zswap?"
 msgstr "Τι είναι το Zswap;"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 132
 msgid ""
 "Zswap captures swap attempts and compresses pages into a RAM cache pool before they hit the disk, "
@@ -487,13 +438,11 @@ msgid ""
 msgstr ""
 "Το Zswap καταγράφει απόπειρες swap και συμπιέζει σελίδες σε ένα pool κρυφής μνήμης RAM πριν αυτές "
 "φτάσουν στον δίσκο, μειώνοντας το I/O."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 137
 msgid "Automatic Mode"
 msgstr "Αυτόματη Λειτουργία"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 139
 msgid ""
 "Recommended: Auto mode detects your hardware (RAM + Storage) and applies the optimal configuration "
@@ -501,324 +450,267 @@ msgid ""
 msgstr ""
 "Συνιστάται: Η αυτόματη λειτουργία εντοπίζει το υλικό σας (RAM + Αποθήκευση) και εφαρμόζει την "
 "βέλτιστη διαμόρφωση αυτόματα."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 160
 msgid "Show dialog on startup"
 msgstr "Εμφάνιση διαλόγου κατά την εκκίνηση"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/welcome_dialog.py, line: 179
 msgid "Let's Start"
 msgstr "Ας Ξεκινήσουμε"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 211
 msgid "Service Status"
 msgstr "Κατάσταση Υπηρεσίας"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 219
 msgid "Current Mode"
 msgstr "Τρέχουσα Λειτουργία"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 225
 msgid "Live Statistics"
 msgstr "Ζωντανά Στατιστικά"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 226
 msgid "Active system usage info"
 msgstr "Πληροφορίες ενεργής χρήσης συστήματος"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 230
 msgid "RAM Total"
 msgstr "Συνολική RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 233
 msgid "RAM Used"
 msgstr "Χρησιμοποιούμενη RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 236
 msgid "RAM Available"
 msgstr "Διαθέσιμη RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 239
 msgid "Buffers / Cache"
 msgstr "Buffers / Κρυφή μνήμη"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 243
 msgid "Swap Total"
 msgstr "Συνολικό Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 246
 msgid "Swap in RAM"
 msgstr "Swap σε RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 249
 msgid "Swap on Disk"
 msgstr "Swap σε Δίσκο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 253
 msgid "Zswap Pool"
 msgstr "Zswap Pool"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 256
 msgid "Zswap Stored"
 msgstr "Zswap Αποθηκευμένο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 259
 msgid "Zswap Ratio"
 msgstr "Αναλογία Zswap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 263
 msgid "Zram Capacity"
 msgstr "Χωρητικότητα Zram"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 266
 msgid "Zram Used"
 msgstr "Χρησιμοποιούμενο Zram"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 269
 msgid "Zram Ratio"
 msgstr "Αναλογία Zram"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 273
 msgid "Swap Files"
 msgstr "Αρχεία Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 284
 msgid "Copy to Clipboard"
 msgstr "Αντιγραφή στο Πρόχειρο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 294
 msgid "Swap Mode"
 msgstr "Λειτουργία Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 295
 msgid "Choose how swap is managed on your system"
 msgstr "Επιλέξτε πώς διαχειρίζεται το swap στο σύστημά σας"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 300
 msgid "Mode"
 msgstr "Λειτουργία"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 331
 msgid "Advanced Settings"
 msgstr "Σύνθετες Ρυθμίσεις"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 332
 msgid "Fine-tune swap parameters"
 msgstr "Μικρορύθμιση παραμέτρων swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
 msgid "Zswap"
 msgstr "Zswap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 343
 msgid "Compressed RAM cache for swap"
 msgstr "Συμπιεσμένη κρυφή μνήμη RAM για swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 348
 msgid "Compressor"
 msgstr "Συμπιεστής"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 349
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 386
 msgid "Compression algorithm"
 msgstr "Αλγόριθμος συμπίεσης"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 356
 msgid "Max Pool Size"
 msgstr "Μέγιστο Μέγεθος Pool"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 357
+#, python-format
 msgid "Maximum % of RAM for cache"
 msgstr "Μέγιστο % RAM για κρυφή μνήμη"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
 msgid "Zram"
 msgstr "Zram"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 369
 msgid "Compressed block device in RAM"
 msgstr "Συμπιεσμένη συσκευή μπλοκ στη RAM"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 373
 msgid "Virtual Size"
 msgstr "Εικονικό Μέγεθος"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 374
+#, python-format
 msgid "Uncompressed size (% of RAM)"
 msgstr "Μη συμπιεσμένο μέγεθος (% of RAM)"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 385
 msgid "Algorithm"
 msgstr "Αλγόριθμος"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 394
 msgid "Memory Limit"
 msgstr "Όριο Μνήμης"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 395
 msgid "Max physical RAM zram can use (OOM protection)"
 msgstr "Μέγιστη φυσική RAM που μπορεί να χρησιμοποιήσει το zram (προστασία OOM)"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 408
 msgid "Recompression"
 msgstr "Επανασυμπίεση"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 409
 msgid "Recompress idle pages with a secondary algorithm"
 msgstr "Επανασυμπίεση ανενεργών σελίδων με δευτερεύοντα αλγόριθμο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 418
 msgid "Recompression Algorithm"
 msgstr "Αλγόριθμος Επανασυμπίεσης"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 419
 msgid "Secondary algorithm for better ratio on idle pages"
 msgstr "Δευτερεύων αλγόριθμος για καλύτερη αναλογία στις ανενεργές σελίδες"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
 msgid "Swap File"
 msgstr "Αρχείο Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 429
 msgid "Dynamic swap files on disk"
 msgstr "Δυναμικά αρχεία swap στον δίσκο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 434
 msgid "Enabled"
 msgstr "Ενεργοποιημένο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 435
 msgid "Create swap files dynamically"
 msgstr "Δημιουργία αρχείων swap δυναμικά"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 443
 msgid "Chunk Size"
 msgstr "Μέγεθος Κομματιού"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 444
 msgid "Base size for each file"
 msgstr "Βασικό μέγεθος για κάθε αρχείο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 456
 msgid "MGLRU Anti-Thrashing"
 msgstr "MGLRU Anti-Thrashing"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 457
 msgid "Working set protection"
 msgstr "Προστασία συνόλου εργασίας"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 461
 msgid "Min TTL"
 msgstr "Ελάχιστο TTL"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 462
 msgid "Protect working set from eviction"
 msgstr "Προστασία συνόλου εργασίας από εξωση"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 800
 msgid "None"
 msgstr "Κανένα"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 892
 msgid "No active swap systems"
 msgstr "Κανένα ενεργό σύστημα swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 920
 msgid "=== BigLinux Swap Manager - Statistics ==="
 msgstr "=== Διαχειριστής Swap BigLinux - Στατιστικά ==="
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 947
 msgid "Swap Devices:"
 msgstr "Συσκευές Swap:"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 995
 msgid "Statistics copied to clipboard"
 msgstr "Στατιστικά αντιγράφηκαν στο πρόχειρο"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/application.py, line: 169
 msgid "Configure swap settings for optimal performance"
 msgstr "Διαμόρφωση ρυθμίσεων swap για βέλτιστη απόδοση"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 137
 msgid "Restore Defaults"
 msgstr "Επαναφορά Προεπιλογών"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 145
 msgid "Apply"
 msgstr "Εφαρμογή"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
-#
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 194
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 223
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 271
 msgid "Restart Required"
 msgstr "Απαιτείται Επανεκκίνηση"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 225
 msgid ""
 "There is data in swap.\n"
@@ -830,29 +722,24 @@ msgstr ""
 "\n"
 "Για ασφάλεια, παρακαλούμε επανεκκινήστε τον υπολογιστή σας για να απενεργοποιήσετε το swap.\n"
 "Αυτό αποτρέπει παγώματα του συστήματος από την απενεργοποίηση ενεργού swap."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 232
 msgid "Stopping swap service..."
 msgstr "Διακοπή υπηρεσίας swap..."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 238
 msgid "Swap management disabled"
 msgstr "Διαχείριση swap απενεργοποιημένη"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 243
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 259
 msgid "Failed: {}"
 msgstr "Απέτυχε: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 253
 msgid "Applying configuration..."
 msgstr "Εφαρμογή διαμόρφωσης..."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 273
 msgid ""
 "Configuration saved successfully.\n"
@@ -864,70 +751,173 @@ msgstr ""
 "\n"
 "Υπάρχουν δεδομένα στο swap. Για ασφάλεια, παρακαλούμε επανεκκινήστε\n"
 "τον υπολογιστή σας για να εφαρμόσετε τις αλλαγές χωρίς κίνδυνο παγωμάτων."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 286
 msgid "Configuration Applied"
 msgstr "Η Διαμόρφωση Εφαρμόστηκε"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 287
 msgid "Configuration applied and service restarted successfully."
 msgstr "Η διαμόρφωση εφαρμόστηκε και η υπηρεσία επανεκκινήθηκε επιτυχώς."
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 291
 msgid "Config saved but restart failed: {}"
 msgstr "Η ρύθμιση αποθηκεύτηκε αλλά η επανεκκίνηση απέτυχε: {}"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 311
 msgid "Refreshed"
 msgstr "Ανανεώθηκε"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 317
 msgid "Settings restored to defaults"
 msgstr "Οι ρυθμίσεις επανήλθαν στις προεπιλογές"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 326
 msgid "About"
 msgstr "Σχετικά"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/window.py, line: 327
 msgid "Quit"
 msgstr "Έξοδος"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 29
 msgid "Swap Manager"
 msgstr "Διαχειριστής Swap"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 99
 msgid "Auto (Recommended)"
 msgstr "Αυτόματο (Συνιστάται)"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 100
 msgid "Zswap + SwapFile"
 msgstr "Zswap + SwapFile"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 101
 msgid "Zram + SwapFile"
 msgstr "Zram + SwapFile"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 102
 msgid "Zram Only"
 msgstr "Μόνο Zram"
-
-#
+# 
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 103
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 165
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 322
 msgid "Disabled"
 msgstr "Απενεργοποιημένο"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 107
+msgid "Automatically detects the best mode for your system"
+msgstr "Αυτόματα ανιχνεύει την καλύτερη λειτουργία για το σύστημά σας."
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 109
+msgid "Compressed RAM cache + dynamic swap files (best for desktop)"
+msgstr "Συμπιεσμένη μνήμη RAM cache + δυναμικά αρχεία swap (καλύτερα για επιτραπέζιους υπολογιστές)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 111
+msgid "Compressed RAM block device + swap files"
+msgstr "Συμπιεσμένη συσκευή μπλοκ RAM + αρχεία swap"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 113
+msgid "Only Zram, no disk swap (for systems without disk swap support)"
+msgstr "Μόνο Zram, χωρίς δίσκο swap (για συστήματα χωρίς υποστήριξη δίσκου swap)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 115
+msgid "Disable swap management (stops the service)"
+msgstr "Απενεργοποίηση διαχείρισης swap (σταματά την υπηρεσία)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 128
+msgid "LZ4 (Fastest)"
+msgstr "LZ4 (Ταχύτερο)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 129
+msgid "Zstd (Balanced)"
+msgstr "Zstd (Ισορροπημένο)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 130
+msgid "LZO (Legacy)"
+msgstr "LZO (Κληρονομιά)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 143
+msgid "Zstd (Best ratio)"
+msgstr "Zstd (Καλύτερη αναλογία)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 144
+msgid "Deflate (Balanced)"
+msgstr "Αποσυμπίεση (Ισορροπημένη)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 145
+msgid "LZ4HC (Faster)"
+msgstr "LZ4HC (Ταχύτερο)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 164
+msgid "Auto (Based on RAM)"
+msgstr "Αυτόματο (Βασισμένο στη RAM)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 166
+msgid "100ms"
+msgstr "100ms"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 167
+msgid "300ms"
+msgstr "300ms"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 168
+msgid "600ms"
+msgstr "600ms"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 169
+msgid "1s (16GB+)"
+msgstr "1s (16GB+)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 170
+msgid "3s (4-8GB)"
+msgstr "3s (4-8GB)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 171
+msgid "5s (2-4GB)"
+msgstr "5s (2-4GB)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 172
+msgid "10s (1-2GB)"
+msgstr "10s (1-2GB)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 277
+msgid "NVMe SSD"
+msgstr "NVMe SSD"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 278
+msgid "SATA SSD"
+msgstr "SATA SSD"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 279
+msgid "Hard Drive"
+msgstr "Σκληρός Δίσκος"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 280
+msgid "eMMC"
+msgstr "eMMC"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 281
+msgid "SD Card"
+msgstr "Κάρτα SD"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 282
+msgid "Unknown"
+msgstr "Άγνωστο"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 323
+msgid "At deactivation (recommended)"
+msgstr "Κατά την απενεργοποίηση (συνιστάται)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 324
+msgid "Continuous (may impact performance)"
+msgstr "Συνεχής (μπορεί να επηρεάσει την απόδοση)"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 325
+msgid "Both modes"
+msgstr "Και οι δύο τρόποι"
+# 
+# File: biglinux-systemd-swap-gui/src/biglinux_swap/config.py, line: 326
+msgid "Auto-detect"
+msgstr "Αυτόματη ανίχνευση"

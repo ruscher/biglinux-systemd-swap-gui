@@ -46,6 +46,7 @@ msgstr ""
 
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 194
+#, python-format
 msgid ""
 "Maximum percentage of RAM reserved for the zswap compressed cache.\n"
 "Higher = more data cached in RAM before writing to disk.\n"
@@ -89,6 +90,7 @@ msgstr ""
 
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 212
+#, python-format
 msgid ""
 "Maximum real RAM that zram can consume.\n"
 "Acts as a safety net against OOM (Out of Memory).\n"
@@ -294,6 +296,7 @@ msgstr ""
 
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/utils.py, line: 306
+#, python-format
 msgid ""
 "Data currently stored in zram, compressed in RAM.\n"
 "With zstd compression, actual RAM usage is typically 30-50% of this."
@@ -659,6 +662,7 @@ msgstr "Max Pool Size"
 
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 357
+#, python-format
 msgid "Maximum % of RAM for cache"
 msgstr "Maximum % of RAM for cache"
 
@@ -679,6 +683,7 @@ msgstr "Virtual Size"
 
 #
 # File: biglinux-systemd-swap-gui/src/biglinux_swap/ui/unified_view.py, line: 374
+#, python-format
 msgid "Uncompressed size (% of RAM)"
 msgstr "Uncompressed size (% of RAM)"
 
